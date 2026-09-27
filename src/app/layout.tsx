@@ -41,7 +41,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased">
+      <body suppressHydrationWarning className="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased">
         <CartProvider>
           <Header />
           {children}

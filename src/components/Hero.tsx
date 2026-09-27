@@ -53,6 +53,8 @@ export default function Hero() {
             src={slide.image}
             fill
             priority={index === 0}
+            quality={100}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
         </div>

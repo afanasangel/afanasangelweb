@@ -40,15 +40,15 @@ export default function Header() {
   return (
     <>
       <div className={headerClass} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        <div className={`w-full bg-[#1a1a1a] text-white py-2 px-4 flex items-center justify-center gap-6 text-[11px] tracking-[0.1em] md:tracking-[0.2em] font-medium uppercase`}>
+        <div className={`w-full bg-[#1a1a1a] text-white py-2 px-2 sm:px-4 flex items-center justify-center gap-2 sm:gap-6 text-[9px] sm:text-[11px] tracking-wider sm:tracking-[0.1em] md:tracking-[0.2em] font-medium uppercase text-center`}>
           <span className="material-symbols-outlined text-[16px] cursor-pointer opacity-70 hover:opacity-100 transition-opacity">chevron_left</span>
-          <span>
-            UNLOCK FREE SHIPPING ON NATIONWIDE PAID ORDERS <Link href="#" className="underline font-bold ml-1">SHOP NOW</Link>
+          <span className="leading-tight">
+            UNLOCK FREE SHIPPING ON NATIONWIDE PAID ORDERS <Link href="#" className="underline font-bold ml-1 whitespace-nowrap">SHOP NOW</Link>
           </span>
           <span className="material-symbols-outlined text-[16px] cursor-pointer opacity-70 hover:opacity-100 transition-opacity">chevron_right</span>
         </div>
         <header className={`w-full border-b ${borderColor} ${bgClass} ${shadowClass} transition-all duration-300`}>
-          <div className="w-full px-4 md:px-8 h-[60px] md:h-[80px] grid grid-cols-3 items-center">
+          <div className="w-full px-4 md:px-8 h-[60px] md:h-[80px] grid grid-cols-[1fr_auto_1fr] items-center">
             {/* Left: Hamburger Menu */}
             <div className="flex items-center justify-start">
               <button
@@ -68,7 +68,7 @@ export default function Header() {
                   alt="Afana's Angel" 
                   width={1007} 
                   height={318} 
-                  className={`object-contain w-[130px] sm:w-[150px] md:w-[180px] lg:w-[220px] h-auto transition-all duration-300 ${isTransparent ? 'brightness-125' : ''}`}
+                  className={`object-contain w-[180px] sm:w-[200px] md:w-[220px] lg:w-[260px] h-auto transition-all duration-300 ${isTransparent ? 'brightness-125' : ''}`}
                   priority
                 />
               </Link>
@@ -79,9 +79,6 @@ export default function Header() {
               <Link href="#" className={`${hoverTextColor} transition-colors flex items-center`}>
                 <span className="material-symbols-outlined text-[28px] font-light">person</span>
               </Link>
-              <button type="button" className={`${hoverTextColor} transition-colors flex items-center`}>
-                <span className="material-symbols-outlined text-[28px] font-light">search</span>
-              </button>
               <button onClick={openCart} type="button" className={`${hoverTextColor} transition-colors flex items-center relative`}>
                 <span className="material-symbols-outlined text-[28px] font-light">local_mall</span>
                 {totalItems > 0 && (
