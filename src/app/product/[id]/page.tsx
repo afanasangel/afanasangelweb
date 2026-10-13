@@ -88,10 +88,23 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           <div className="lg:col-span-8 pl-4 lg:pl-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
                <div className="relative w-full aspect-[3/4] bg-gray-200">
-                  <Image src={product.image} alt={product.title} fill className="object-cover" />
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority
+                  />
                </div>
                <div className="relative w-full aspect-[3/4] bg-gray-200 hidden md:block">
-                  <Image src={product.image} alt={product.title} fill className="object-cover" />
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                </div>
             </div>
           </div>
@@ -165,7 +178,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
              return (
                <Link href={`/product/${isAlternate ? "2" : "1"}`} key={i} className="group relative block cursor-pointer">
                   <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
-                    <Image src={sugProduct.image} alt={sugProduct.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <Image
+                      src={sugProduct.image}
+                      alt={sugProduct.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
                     <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{sugProduct.saleTag}</span>
                   </div>
                   <h3 className="text-xs tracking-widest uppercase text-black mb-2">{sugProduct.title.replace(" - 42602310", ` - 4260231${i}`).replace(" - 42602311", ` - 4260231${i}`)}</h3>
