@@ -5,12 +5,15 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 export type CartItem = {
   id: string; // unique ID per item variant
   productId: string;
+  variantId?: string;
   title: string;
+  variantTitle?: string;
   sku: string;
   price: string;
   priceNumeric: number;
   image: string;
   quantity: number;
+  selectedOptions?: Array<{ name: string; value: string }>;
 };
 
 type CartContextType = {

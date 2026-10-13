@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
+import { getShopifyProductByHandle } from "@/lib/shopify";
 
-const products = {
+const fallbackProducts = {
   "1": {
     title: "1 PIECE - PRINTED SHIRT - 42602310",
     sku: "001692862104",
@@ -12,9 +13,20 @@ const products = {
     installment: "Rs.477",
     saleTag: "SAVE 50%",
     image: "/IMG_6494.JPG",
+    images: ["/IMG_6494.JPG", "/IMG_6494.JPG"],
     detail: "Tropical Style Shirt",
     fabric: "Lawn",
     color: "Light Mint",
+    options: [
+      { id: "size", name: "Size", values: ["XS", "S", "M", "L", "XL"] }
+    ],
+    variants: [
+      { id: "fb-1-xs", title: "XS", price: "RS. 1,245.00", priceNumeric: 1245.00, sku: "001692862104-XS", availableForSale: true, selectedOptions: [{ name: "Size", value: "XS" }] },
+      { id: "fb-1-s", title: "S", price: "RS. 1,245.00", priceNumeric: 1245.00, sku: "001692862104-S", availableForSale: true, selectedOptions: [{ name: "Size", value: "S" }] },
+      { id: "fb-1-m", title: "M", price: "RS. 1,245.00", priceNumeric: 1245.00, sku: "001692862104-M", availableForSale: true, selectedOptions: [{ name: "Size", value: "M" }] },
+      { id: "fb-1-l", title: "L", price: "RS. 1,245.00", priceNumeric: 1245.00, sku: "001692862104-L", availableForSale: true, selectedOptions: [{ name: "Size", value: "L" }] },
+      { id: "fb-1-xl", title: "XL", price: "RS. 1,245.00", priceNumeric: 1245.00, sku: "001692862104-XL", availableForSale: false, selectedOptions: [{ name: "Size", value: "XL" }] },
+    ]
   },
   "2": {
     title: "1 PIECE - PRINTED SHIRT - 42602311",
@@ -25,15 +37,46 @@ const products = {
     installment: "Rs.500",
     saleTag: "SAVE 50%",
     image: "/IMG_6545.JPG",
+    images: ["/IMG_6545.JPG", "/IMG_6545.JPG"],
     detail: "Ethereal Green Floral Tunic",
     fabric: "Lawn",
     color: "Green",
+    options: [
+      { id: "size", name: "Size", values: ["XS", "S", "M", "L", "XL"] }
+    ],
+    variants: [
+      { id: "fb-2-xs", title: "XS", price: "RS. 1,500.00", priceNumeric: 1500.00, sku: "001692862105-XS", availableForSale: true, selectedOptions: [{ name: "Size", value: "XS" }] },
+      { id: "fb-2-s", title: "S", price: "RS. 1,500.00", priceNumeric: 1500.00, sku: "001692862105-S", availableForSale: true, selectedOptions: [{ name: "Size", value: "S" }] },
+      { id: "fb-2-m", title: "M", price: "RS. 1,500.00", priceNumeric: 1500.00, sku: "001692862105-M", availableForSale: true, selectedOptions: [{ name: "Size", value: "M" }] },
+      { id: "fb-2-l", title: "L", price: "RS. 1,500.00", priceNumeric: 1500.00, sku: "001692862105-L", availableForSale: true, selectedOptions: [{ name: "Size", value: "L" }] },
+      { id: "fb-2-xl", title: "XL", price: "RS. 1,500.00", priceNumeric: 1500.00, sku: "001692862105-XL", availableForSale: false, selectedOptions: [{ name: "Size", value: "XL" }] },
+    ]
   }
 };
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
-  const product = products[resolvedParams.id as keyof typeof products] || products["1"];
+  const shopifyProduct = await getShopifyProductByHandle(resolvedParams.id);
+  
+  const product = shopifyProduct
+    ? {
+        title: shopifyProduct.title,
+        sku: shopifyProduct.variants[0]?.sku || shopifyProduct.handle,
+        price: shopifyProduct.price,
+        priceNumeric: shopifyProduct.priceNumeric,
+        originalPrice: shopifyProduct.originalPrice,
+        installment: `Rs.${Math.round(shopifyProduct.priceNumeric / 3)}`,
+        saleTag: shopifyProduct.tags[0] || (shopifyProduct.originalPrice ? "SALE" : ""),
+        image: shopifyProduct.imageUrl,
+        images: shopifyProduct.images.length > 1 ? shopifyProduct.images : [shopifyProduct.imageUrl, shopifyProduct.imageUrl],
+        detail: shopifyProduct.description || shopifyProduct.title,
+        fabric: "Lawn",
+        color: "Standard",
+        variantId: shopifyProduct.variants[0]?.id,
+        options: shopifyProduct.options,
+        variants: shopifyProduct.variants,
+      }
+    : (fallbackProducts[resolvedParams.id as keyof typeof fallbackProducts] || fallbackProducts["1"]);
   
   return (
     <div className="min-h-screen bg-[#f3f3f3] pt-24">
@@ -69,19 +112,25 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <span className="text-sm text-black font-medium">Pay in 3 Installments of <span className="text-[#5900d8]">{product.installment}</span></span>
             </div>
             
-            <div className="mb-6">
-              <span className="bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase">{product.saleTag}</span>
-            </div>
+            {product.saleTag ? (
+              <div className="mb-6">
+                <span className="bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase">{product.saleTag}</span>
+              </div>
+            ) : null}
             
             <p className="text-xs text-gray-500 mb-8 uppercase tracking-widest">SKU: {product.sku}</p>
             
             <AddToCartButton product={{
               id: resolvedParams.id,
+              variantId: (product as any).variantId,
               title: product.title,
               sku: product.sku,
               price: product.price,
               priceNumeric: product.priceNumeric,
-              image: product.image
+              originalPrice: product.originalPrice,
+              image: product.image,
+              options: (product as any).options,
+              variants: (product as any).variants,
             }} />
             
             {/* Accordion area */}
@@ -112,7 +161,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
            {/* Reusing the styling for suggestions */}
            {[1, 2, 3, 4].map((i) => {
              const isAlternate = i % 2 === 0;
-             const sugProduct = isAlternate ? products["2"] : products["1"];
+             const sugProduct = isAlternate ? fallbackProducts["2"] : fallbackProducts["1"];
              return (
                <Link href={`/product/${isAlternate ? "2" : "1"}`} key={i} className="group relative block cursor-pointer">
                   <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">

@@ -20,7 +20,7 @@ export default function CategoryTiles() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
         {/* Category 1 */}
         <Link
-          href="#"
+          href="/shop?collection=abaya"
           className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-auto lg:h-[700px]"
         >
           <Image
@@ -42,7 +42,7 @@ export default function CategoryTiles() {
         </Link>
         {/* Category 2 */}
         <Link
-          href="#"
+          href="/shop?collection=premium-abaya"
           className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-auto lg:h-[700px]"
         >
           <Image
@@ -64,7 +64,7 @@ export default function CategoryTiles() {
         </Link>
         {/* Category 3 */}
         <Link
-          href="#"
+          href="/shop?collection=pakistani-suit"
           className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-auto lg:h-[700px]"
         >
           <Image
@@ -86,7 +86,7 @@ export default function CategoryTiles() {
         </Link>
         {/* Category 4 */}
         <Link
-          href="#"
+          href="/shop?collection=premium-pakistani-suit"
           className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-auto lg:h-[700px]"
         >
           <Image

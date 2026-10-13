@@ -6,8 +6,33 @@ import Link from "next/link";
 
 type FilterType = "all" | "jalabiya" | "coords" | "couture";
 
-export default function ArtfulEdit() {
+export default function ArtfulEdit({ initialProducts = [] }: { initialProducts?: any[] }) {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+
+  const fallbackItems = [
+    {
+      id: "1",
+      handle: "1",
+      tag: "Selling Fast",
+      title: "Tropical Style Printed Shirt",
+      category: "Pret Collection",
+      price: "$145",
+      priceAed: "AED 530",
+      imageUrl: "/IMG_6494.JPG",
+    },
+    {
+      id: "2",
+      handle: "2",
+      tag: "New In",
+      title: "Ethereal Green Floral Tunic",
+      category: "Summer Edit",
+      price: "$165",
+      priceAed: "AED 600",
+      imageUrl: "/IMG_6545.JPG",
+    },
+  ];
+
+  const displayProducts = initialProducts.length > 0 ? initialProducts : fallbackItems;
 
   const filterButtonClasses = (filter: FilterType) =>
     `px-space-md py-space-xs font-label-caps-sm text-label-caps-sm uppercase tracking-wider transition-colors ${
@@ -61,28 +86,20 @@ export default function ArtfulEdit() {
         </div>
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
-          <ProductCard
-            id="1"
-            tag="Selling Fast"
-            title="Tropical Style Printed Shirt"
-            category="Pret Collection"
-            price="$145"
-            priceAed="AED 530"
-            imageAlt="Tropical Style Printed Shirt"
-            imageUrl="/IMG_6494.JPG"
-            isVisible={activeFilter === "all" || activeFilter === "coords"}
-          />
-          <ProductCard
-            id="2"
-            tag="New In"
-            title="Ethereal Green Floral Tunic"
-            category="Summer Edit"
-            price="$165"
-            priceAed="AED 600"
-            imageAlt="Ethereal Green Floral Tunic"
-            imageUrl="/IMG_6545.JPG"
-            isVisible={activeFilter === "all" || activeFilter === "jalabiya"}
-          />
+          {displayProducts.map((p) => (
+            <ProductCard
+              key={p.id}
+              id={p.handle || p.id}
+              tag={p.tag || (p.tags && p.tags[0]) || "New In"}
+              title={p.title}
+              category={p.category || "Pret Collection"}
+              price={p.price}
+              priceAed={p.originalPrice || p.priceAed || ""}
+              imageAlt={p.title}
+              imageUrl={p.imageUrl}
+              isVisible={true}
+            />
+          ))}
         </div>
         {/* View All Button */}
         <div className="text-center mt-space-2xl">

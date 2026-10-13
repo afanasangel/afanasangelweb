@@ -9,6 +9,22 @@ export default function CartDrawer() {
 
   if (!isCartOpen) return null;
 
+  const handleCheckout = () => {
+    const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "afnasangel.myshopify.com";
+    const validItems = items.filter((i) => Boolean(i.variantId));
+    if (validItems.length > 0) {
+      const permalink = validItems
+        .map((i) => {
+          const id = i.variantId!.includes("/") ? i.variantId!.split("/").pop() : i.variantId;
+          return `${id}:${i.quantity}`;
+        })
+        .join(",");
+      window.location.href = `https://${domain}/cart/${permalink}`;
+    } else {
+      window.location.href = `https://${domain}/cart`;
+    }
+  };
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       closeCart();
@@ -51,6 +67,11 @@ export default function CartDrawer() {
                     <h3 className="text-xs font-medium text-black uppercase tracking-widest mb-1 leading-relaxed">
                       {item.title}
                     </h3>
+                    {item.variantTitle && item.variantTitle !== "Default Title" && (
+                      <p className="text-[10px] text-gray-500 tracking-widest uppercase mb-1 font-medium">
+                        {item.variantTitle}
+                      </p>
+                    )}
                     <p className="text-xs text-gray-500 tracking-widest mb-3">
                       {item.price}
                     </p>
@@ -94,7 +115,10 @@ export default function CartDrawer() {
             <p className="text-sm text-gray-500 mb-6">
               Taxes and shipping calculated at checkout
             </p>
-            <button className="w-full bg-[#1a1a1a] text-white py-4 uppercase tracking-[0.2em] text-xs font-medium hover:bg-black transition-colors mb-4 flex justify-center gap-2">
+            <button
+              onClick={handleCheckout}
+              className="w-full bg-[#1a1a1a] text-white py-4 uppercase tracking-[0.2em] text-xs font-medium hover:bg-black transition-colors mb-4 flex justify-center gap-2 cursor-pointer"
+            >
               <span>CHECKOUT</span>
               <span>•</span>
               <span>RS. {totalNumeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>

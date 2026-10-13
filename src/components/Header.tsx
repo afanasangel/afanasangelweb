@@ -102,22 +102,22 @@ export default function Header() {
           </button>
         </div>
         <nav className="flex flex-col py-6 px-6 gap-6 overflow-y-auto">
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=budget-friendly-abaya">
             Budget Friendly Abaya
           </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=abaya">
             Abaya
           </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=premium-abaya">
             Premium Abaya
           </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=pakistani-suit">
             Pakistani Suit
           </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=premium-pakistani-suit">
             Premium Pakistani Suits
           </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop">
+          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=bridal-collections">
             Bridal Collections
           </Link>
         </nav>
