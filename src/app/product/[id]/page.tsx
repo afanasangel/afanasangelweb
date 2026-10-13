@@ -89,13 +89,24 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       {/* Breadcrumb / Top Nav */}
       <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Images (Live Shopify multi-image gallery) */}
-          <div className="lg:col-span-8 px-4 lg:pl-12 lg:pr-0">
+          {/* Left Column: Images + Detailed Description (Scrolls naturally) */}
+          <div className="lg:col-span-7 xl:col-span-8 px-4 lg:pl-12 lg:pr-0">
             <ProductGallery images={product.images} title={product.title} />
+
+            {/* Desktop & Mobile Description & Details (Scrolls with the images) */}
+            <div className="mt-12 pt-4">
+              <ProductTabs
+                description={product.description}
+                descriptionHtml={(product as any).descriptionHtml}
+                detail={product.detail}
+                fabric={(product as any).fabric}
+                color={(product as any).color}
+              />
+            </div>
           </div>
           
-          {/* Right Column: Details (Fixed/Sticky on desktop as images scroll) */}
-          <div className="lg:col-span-4 px-4 lg:pr-12 flex flex-col pt-4 lg:sticky lg:top-28">
+          {/* Right Column: Static Purchase Box (Fixed/Sticky on desktop as images & details scroll) */}
+          <div className="lg:col-span-5 xl:col-span-4 px-4 lg:pr-12 flex flex-col pt-4 lg:sticky lg:top-28">
             <h1 className="font-headline-sm text-xl tracking-[0.2em] uppercase mb-4 text-black">
               {product.title}
             </h1>
@@ -126,16 +137,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               variants: (product as any).variants,
             }} />
             
-            {/* Live Shopify Description & Details Accordion */}
-            <ProductTabs
-              description={product.description}
-              descriptionHtml={(product as any).descriptionHtml}
-              detail={product.detail}
-              fabric={(product as any).fabric}
-              color={(product as any).color}
-            />
-            
-            <div className="mt-12 flex items-center gap-2 text-gray-500">
+            <div className="mt-8 flex items-center gap-2 text-gray-500">
               <span className="text-[10px] tracking-[0.2em] uppercase">SHARE</span>
               <span className="material-symbols-outlined text-sm">share</span>
             </div>

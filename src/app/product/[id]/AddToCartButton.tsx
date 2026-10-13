@@ -354,7 +354,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
         type="button"
         onClick={handleBuyNow}
         disabled={!isAvailableForSale}
-        className={`w-full py-4 uppercase tracking-[0.2em] text-xs font-semibold transition-colors mb-16 ${
+        className={`w-full py-4 uppercase tracking-[0.2em] text-xs font-semibold transition-colors mb-6 ${
           isAvailableForSale
             ? "bg-[#1a1a1a] text-white hover:bg-black cursor-pointer shadow-md"
             : "bg-gray-300 text-gray-400 cursor-not-allowed"
