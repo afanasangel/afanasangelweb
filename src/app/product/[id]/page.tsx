@@ -61,6 +61,7 @@ const fallbackProducts = {
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const shopifyProduct = await getShopifyProductByHandle(resolvedParams.id);
+  const allShopifyProducts = await getShopifyProducts(undefined, 8);
   
   const product = shopifyProduct
     ? {
@@ -76,13 +77,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         description: shopifyProduct.description || "",
         descriptionHtml: shopifyProduct.descriptionHtml || shopifyProduct.description || "",
         detail: shopifyProduct.description || shopifyProduct.title,
-        fabric: shopifyProduct.tags?.find(t => t.toLowerCase().startsWith("fabric:"))?.replace(/fabric:/i, "") || "Premium Silk / Organza",
-        color: shopifyProduct.options?.find(o => o.name.toLowerCase().includes("color"))?.values?.join(", ") || "Standard",
+        fabric: shopifyProduct.tags?.find(t => t.toLowerCase().startsWith("fabric:"))?.replace(/fabric:/i, "") || "Premium Fabric",
+        color: shopifyProduct.options?.find(o => o.name.toLowerCase().includes("color"))?.values?.join(", ") || "",
         variantId: shopifyProduct.variants[0]?.id,
         options: shopifyProduct.options,
         variants: shopifyProduct.variants,
       }
     : (fallbackProducts[resolvedParams.id as keyof typeof fallbackProducts] || fallbackProducts["1"]);
+
+  // Suggestions: live Shopify products excluding current product, or fallback
+  const suggestedProducts = allShopifyProducts
+    .filter((p) => p.handle !== resolvedParams.id && p.id !== product.title)
+    .slice(0, 4);
   
   return (
     <div className="min-h-screen bg-[#f3f3f3] pt-24">
@@ -149,30 +155,55 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <div className="border-t border-gray-200 bg-[#f3f3f3] py-16 px-4 md:px-12">
         <h2 className="text-center font-headline-md text-2xl tracking-[0.2em] uppercase mb-16 text-black">YOU MAY ALSO LIKE</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-[1920px] mx-auto">
-           {/* Reusing the styling for suggestions */}
-           {[1, 2, 3, 4].map((i) => {
-             const isAlternate = i % 2 === 0;
-             const sugProduct = isAlternate ? fallbackProducts["2"] : fallbackProducts["1"];
-             return (
-               <Link href={`/product/${isAlternate ? "2" : "1"}`} key={i} className="group relative block cursor-pointer">
+           {suggestedProducts.length > 0 ? (
+             suggestedProducts.map((item) => (
+               <Link href={`/product/${item.handle}`} key={item.id} className="group relative block cursor-pointer">
                   <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
                     <Image
-                      src={sugProduct.image}
-                      alt={sugProduct.title}
+                      src={item.imageUrl}
+                      alt={item.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
-                    <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{sugProduct.saleTag}</span>
+                    {item.tags[0] && (
+                      <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{item.tags[0]}</span>
+                    )}
                   </div>
-                  <h3 className="text-xs tracking-widest uppercase text-black mb-2">{sugProduct.title.replace(" - 42602310", ` - 4260231${i}`).replace(" - 42602311", ` - 4260231${i}`)}</h3>
+                  <h3 className="text-xs tracking-widest uppercase text-black mb-2 truncate">{item.title}</h3>
                   <div className="flex items-center gap-3 text-xs tracking-widest">
-                    <span className="text-[#e22d2d] font-medium">{sugProduct.price}</span>
-                    <span className="text-gray-400 line-through">{sugProduct.originalPrice}</span>
+                    <span className="text-[#e22d2d] font-medium">{item.price}</span>
+                    {item.originalPrice && (
+                      <span className="text-gray-400 line-through">{item.originalPrice}</span>
+                    )}
                   </div>
                </Link>
-             );
-           })}
+             ))
+           ) : (
+             [1, 2, 3, 4].map((i) => {
+               const isAlternate = i % 2 === 0;
+               const sugProduct = isAlternate ? fallbackProducts["2"] : fallbackProducts["1"];
+               return (
+                 <Link href={`/product/${isAlternate ? "2" : "1"}`} key={i} className="group relative block cursor-pointer">
+                    <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
+                      <Image
+                        src={sugProduct.image}
+                        alt={sugProduct.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{sugProduct.saleTag}</span>
+                    </div>
+                    <h3 className="text-xs tracking-widest uppercase text-black mb-2">{sugProduct.title.replace(" - 42602310", ` - 4260231${i}`).replace(" - 42602311", ` - 4260231${i}`)}</h3>
+                    <div className="flex items-center gap-3 text-xs tracking-widest">
+                      <span className="text-[#e22d2d] font-medium">{sugProduct.price}</span>
+                      <span className="text-gray-400 line-through">{sugProduct.originalPrice}</span>
+                    </div>
+                 </Link>
+               );
+             })
+           )}
         </div>
       </div>
     </div>
