@@ -95,12 +95,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       {/* Breadcrumb / Top Nav */}
       <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Images + Detailed Description (Scrolls naturally) */}
+          {/* Left Column: Images + Desktop Description (Scrolls naturally) */}
           <div className="lg:col-span-7 xl:col-span-8 px-4 lg:pl-12 lg:pr-0">
             <ProductGallery images={product.images} title={product.title} />
 
-            {/* Desktop & Mobile Description & Details (Scrolls with the images) */}
-            <div className="mt-12 pt-4">
+            {/* Desktop-only Description & Details (Scrolls with the images) */}
+            <div className="hidden lg:block mt-12 pt-4">
               <ProductTabs
                 description={product.description}
                 descriptionHtml={(product as any).descriptionHtml}
@@ -146,6 +146,17 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <div className="mt-8 flex items-center gap-2 text-gray-500">
               <span className="text-[10px] tracking-[0.2em] uppercase">SHARE</span>
               <span className="material-symbols-outlined text-sm">share</span>
+            </div>
+
+            {/* Mobile-only Description & Details: Shown after Images, Price, Size, and Buttons */}
+            <div className="block lg:hidden mt-12 pt-4 border-t border-gray-200">
+              <ProductTabs
+                description={product.description}
+                descriptionHtml={(product as any).descriptionHtml}
+                detail={product.detail}
+                fabric={(product as any).fabric}
+                color={(product as any).color}
+              />
             </div>
           </div>
         </div>
