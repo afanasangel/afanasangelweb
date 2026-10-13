@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column: Images (Live Shopify multi-image gallery) */}
-          <div className="lg:col-span-8 pl-4 lg:pl-12">
+          <div className="lg:col-span-8 px-4 lg:pl-12 lg:pr-0">
             <ProductGallery images={product.images} title={product.title} />
           </div>
           
