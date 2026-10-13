@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
+import ProductGallery from "./ProductGallery";
+import ProductTabs from "./ProductTabs";
 import { getShopifyProductByHandle } from "@/lib/shopify";
 
 const fallbackProducts = {
@@ -13,8 +15,9 @@ const fallbackProducts = {
     installment: "Rs.477",
     saleTag: "SAVE 50%",
     image: "/IMG_6494.JPG",
-    images: ["/IMG_6494.JPG", "/IMG_6494.JPG"],
+    images: ["/IMG_6494.JPG"],
     detail: "Tropical Style Shirt",
+    description: "Tropical Style Printed Shirt crafted in pure lawn.",
     fabric: "Lawn",
     color: "Light Mint",
     options: [
@@ -37,8 +40,9 @@ const fallbackProducts = {
     installment: "Rs.500",
     saleTag: "SAVE 50%",
     image: "/IMG_6545.JPG",
-    images: ["/IMG_6545.JPG", "/IMG_6545.JPG"],
+    images: ["/IMG_6545.JPG"],
     detail: "Ethereal Green Floral Tunic",
+    description: "Ethereal Green Floral Tunic with delicate embroidery.",
     fabric: "Lawn",
     color: "Green",
     options: [
@@ -68,10 +72,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         installment: `Rs.${Math.round(shopifyProduct.priceNumeric / 3)}`,
         saleTag: shopifyProduct.tags[0] || (shopifyProduct.originalPrice ? "SALE" : ""),
         image: shopifyProduct.imageUrl,
-        images: shopifyProduct.images.length > 1 ? shopifyProduct.images : [shopifyProduct.imageUrl, shopifyProduct.imageUrl],
+        images: shopifyProduct.images && shopifyProduct.images.length > 0 ? shopifyProduct.images : [shopifyProduct.imageUrl],
+        description: shopifyProduct.description || "",
+        descriptionHtml: shopifyProduct.descriptionHtml || shopifyProduct.description || "",
         detail: shopifyProduct.description || shopifyProduct.title,
-        fabric: "Lawn",
-        color: "Standard",
+        fabric: shopifyProduct.tags?.find(t => t.toLowerCase().startsWith("fabric:"))?.replace(/fabric:/i, "") || "Premium Silk / Organza",
+        color: shopifyProduct.options?.find(o => o.name.toLowerCase().includes("color"))?.values?.join(", ") || "Standard",
         variantId: shopifyProduct.variants[0]?.id,
         options: shopifyProduct.options,
         variants: shopifyProduct.variants,
@@ -80,33 +86,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   
   return (
     <div className="min-h-screen bg-[#f3f3f3] pt-24">
-      {/* Breadcrumb / Top Nav Placeholder (optional if matching reference header exactly, but layout provides header) */}
-      
+      {/* Breadcrumb / Top Nav */}
       <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left Column: Images (using 2 column grid of same image for demo) */}
+          {/* Left Column: Images (Live Shopify multi-image gallery) */}
           <div className="lg:col-span-8 pl-4 lg:pl-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-               <div className="relative w-full aspect-[3/4] bg-gray-200">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority
-                  />
-               </div>
-               <div className="relative w-full aspect-[3/4] bg-gray-200 hidden md:block">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-               </div>
-            </div>
+            <ProductGallery images={product.images} title={product.title} />
           </div>
           
           {/* Right Column: Details */}
@@ -146,18 +131,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               variants: (product as any).variants,
             }} />
             
-            {/* Accordion area */}
-            <div className="border-t border-gray-300 pt-6 flex items-center gap-8 mb-6">
-              <button className="text-black font-semibold text-xs tracking-widest uppercase border-b-[3px] border-black pb-2">DETAILS</button>
-              <button className="text-gray-500 text-xs tracking-widest uppercase hover:text-black transition-colors pb-2">DESCRIPTION</button>
-            </div>
-            
-            <div className="text-xs text-black space-y-4 leading-relaxed font-medium">
-              <p><strong>Product Detail:</strong><br/>{product.detail}</p>
-              <p><strong>SHIRT</strong><br/>Printed Cross Hatch Lawn Shirt: 2.25 Meter<br/>Wider Width 58"</p>
-              <p><strong>Fabric:</strong> {product.fabric}<br/><strong>Color:</strong> {product.color}</p>
-              <p><strong>Note:</strong><br/>Product color may slightly vary due to photographic lighting sources or your device settings.</p>
-            </div>
+            {/* Live Shopify Description & Details Accordion */}
+            <ProductTabs
+              description={product.description}
+              descriptionHtml={(product as any).descriptionHtml}
+              detail={product.detail}
+              fabric={(product as any).fabric}
+              color={(product as any).color}
+            />
             
             <div className="mt-12 flex items-center gap-2 text-gray-500">
               <span className="text-[10px] tracking-[0.2em] uppercase">SHARE</span>

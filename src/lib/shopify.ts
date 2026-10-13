@@ -28,6 +28,7 @@ export interface ShopifyProduct {
   title: string;
   handle: string;
   description: string;
+  descriptionHtml?: string;
   category?: string;
   price: string;
   priceNumeric: number;
@@ -104,6 +105,7 @@ function mapProductNode(p: any): ShopifyProduct {
     title: p.title,
     handle: p.handle,
     description: p.description || "",
+    descriptionHtml: p.descriptionHtml || p.description || "",
     category: p.productType || "Collection",
     price: `${currency} ${priceAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
     priceNumeric: priceAmount,
@@ -330,6 +332,7 @@ export async function getShopifyProductByHandle(handle: string): Promise<Shopify
         title
         handle
         description
+        descriptionHtml
         productType
         vendor
         tags
