@@ -88,14 +88,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     <div className="min-h-screen bg-[#f3f3f3] pt-24">
       {/* Breadcrumb / Top Nav */}
       <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Images (Live Shopify multi-image gallery) */}
           <div className="lg:col-span-8 px-4 lg:pl-12 lg:pr-0">
             <ProductGallery images={product.images} title={product.title} />
           </div>
           
-          {/* Right Column: Details */}
-          <div className="lg:col-span-4 px-4 lg:pr-12 flex flex-col pt-4">
+          {/* Right Column: Details (Fixed/Sticky on desktop as images scroll) */}
+          <div className="lg:col-span-4 px-4 lg:pr-12 flex flex-col pt-4 lg:sticky lg:top-28">
             <h1 className="font-headline-sm text-xl tracking-[0.2em] uppercase mb-4 text-black">
               {product.title}
             </h1>

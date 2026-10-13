@@ -41,8 +41,8 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
   return (
     <div className="w-full">
       {/* =========================================================================
-          MOBILE VIEW (< lg): Single active image hero with swipe, counter & thumbnails
-          Only the currently active image is rendered in the main viewer!
+          MOBILE VIEW (< lg): Single active image hero with swipe, arrows, counter & thumbnails.
+          Kept EXACTLY as is.
          ========================================================================= */}
       <div className="block lg:hidden w-full">
         {/* Main Single Active Image */}
@@ -60,7 +60,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             priority
           />
 
-          {/* Left / Right arrows for quick mobile tap */}
+          {/* Left / Right arrows */}
           {displayImages.length > 1 && (
             <>
               <button
@@ -120,69 +120,40 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
       </div>
 
       {/* =========================================================================
-          DESKTOP VIEW (>= lg): Elegant dual-column / multi-column grid with vertical thumbnails
+          DESKTOP VIEW (>= lg): Clean 2-column image grid without side preview strip.
+          Full width grid. Additional images (like 3rd or 4th) come naturally as you scroll down.
          ========================================================================= */}
-      <div className="hidden lg:flex flex-row gap-4 h-full">
-        {/* Desktop Vertical Thumbnails */}
-        {displayImages.length > 1 && (
-          <div className="flex flex-col gap-3 overflow-y-auto max-h-[750px] scrollbar-thin py-1 pr-1">
+      <div className="hidden lg:block w-full">
+        {displayImages.length >= 2 ? (
+          <div className="grid grid-cols-2 gap-4">
             {displayImages.map((img, idx) => (
-              <button
+              <div
                 key={`${img}-${idx}`}
-                type="button"
-                onClick={() => setActiveImageIndex(idx)}
-                className={`relative w-20 aspect-[3/4] flex-shrink-0 bg-gray-200 border-2 transition-all cursor-pointer overflow-hidden ${
-                  activeImageIndex === idx ? "border-black shadow-md scale-[1.02]" : "border-transparent opacity-70 hover:opacity-100"
-                }`}
+                className="relative w-full aspect-[3/4] bg-gray-200 overflow-hidden group shadow-xs"
               >
                 <Image
                   src={img}
-                  alt={`${title} thumbnail ${idx + 1}`}
+                  alt={`${title} image ${idx + 1}`}
                   fill
-                  className="object-cover"
-                  sizes="80px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 1200px) 50vw, 38vw"
+                  priority={idx < 2}
                 />
-              </button>
+              </div>
             ))}
           </div>
+        ) : (
+          <div className="relative w-full aspect-[3/4] bg-gray-200 overflow-hidden shadow-xs">
+            <Image
+              src={currentImage}
+              alt={title}
+              fill
+              className="object-cover"
+              sizes="50vw"
+              priority
+            />
+          </div>
         )}
-
-        {/* Desktop Grid Layout */}
-        <div className="flex-1">
-          {displayImages.length >= 2 ? (
-            <div className="grid grid-cols-2 gap-4">
-              {displayImages.map((img, idx) => (
-                <div
-                  key={`${img}-${idx}`}
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`relative w-full aspect-[3/4] bg-gray-200 overflow-hidden group cursor-pointer border-2 transition-all ${
-                    activeImageIndex === idx ? "border-black" : "border-transparent"
-                  }`}
-                >
-                  <Image
-                    src={img}
-                    alt={`${title} ${idx + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 1200px) 50vw, 33vw"
-                    priority={idx === 0}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="relative w-full aspect-[3/4] bg-gray-200 overflow-hidden">
-              <Image
-                src={currentImage}
-                alt={title}
-                fill
-                className="object-cover"
-                sizes="50vw"
-                priority
-              />
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
