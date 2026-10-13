@@ -124,12 +124,6 @@ export default function CartDrawer() {
               <span>•</span>
               <span>RS. {totalNumeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </button>
-            <div className="flex items-center justify-center gap-2">
-              <span className="bg-[#5900d8] text-white text-[11px] font-bold px-3 py-1 rounded-sm">baadmay</span>
-              <span className="text-sm text-black font-medium">
-                Pay in 3 Installments of <span className="text-[#5900d8]">Rs. {(totalNumeric / 3).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-              </span>
-            </div>
           </div>
         )}
       </div>

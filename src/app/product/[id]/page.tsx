@@ -100,14 +100,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               {product.title}
             </h1>
             
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-6">
               <span className="text-[#e22d2d] tracking-widest text-lg">{product.price}</span>
               <span className="text-gray-400 line-through tracking-widest text-lg">{product.originalPrice}</span>
-            </div>
-            
-            <div className="flex items-center gap-2 mb-6">
-              <span className="bg-[#5900d8] text-white text-[11px] font-bold px-3 py-1 rounded-sm">baadmay</span>
-              <span className="text-sm text-black font-medium">Pay in 3 Installments of <span className="text-[#5900d8]">{product.installment}</span></span>
             </div>
             
             {product.saleTag ? (
