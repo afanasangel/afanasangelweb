@@ -3,7 +3,7 @@ import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
 import ProductGallery from "./ProductGallery";
 import ProductTabs from "./ProductTabs";
-import { getShopifyProductByHandle } from "@/lib/shopify";
+import { getShopifyProductByHandle, getShopifyProducts, ShopifyProduct } from "@/lib/shopify";
 
 const fallbackProducts = {
   "1": {
@@ -87,7 +87,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   // Suggestions: live Shopify products excluding current product, or fallback
   const suggestedProducts = allShopifyProducts
-    .filter((p) => p.handle !== resolvedParams.id && p.id !== product.title)
+    .filter((p: ShopifyProduct) => p.handle !== resolvedParams.id && p.id !== product.title)
     .slice(0, 4);
   
   return (
@@ -156,7 +156,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <h2 className="text-center font-headline-md text-2xl tracking-[0.2em] uppercase mb-16 text-black">YOU MAY ALSO LIKE</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-[1920px] mx-auto">
            {suggestedProducts.length > 0 ? (
-             suggestedProducts.map((item) => (
+             suggestedProducts.map((item: ShopifyProduct) => (
                <Link href={`/product/${item.handle}`} key={item.id} className="group relative block cursor-pointer">
                   <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
                     <Image
