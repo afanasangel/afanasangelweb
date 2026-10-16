@@ -143,14 +143,14 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             ))}
           </div>
         ) : (
-          <div className="w-full flex justify-center">
-            <div className="relative w-full max-w-[560px] aspect-[3/4] bg-gray-200 overflow-hidden shadow-xs rounded-xs">
+          <div className="w-full flex justify-center items-start">
+            <div className="relative w-full max-w-[480px] h-[calc(100vh-150px)] max-h-[720px] bg-[#f3f3f3] overflow-hidden shadow-xs rounded-xs flex items-center justify-center">
               <Image
                 src={currentImage}
                 alt={title}
                 fill
-                className="object-cover hover:scale-102 transition-transform duration-500"
-                sizes="(max-width: 1024px) 100vw, 560px"
+                className="object-contain hover:scale-102 transition-transform duration-500"
+                sizes="(max-width: 1024px) 100vw, 480px"
                 priority
               />
             </div>
