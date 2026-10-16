@@ -93,12 +93,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const isSingleImage = product.images.length <= 1;
 
   return (
-    <div className="min-h-screen bg-[#f3f3f3] pt-4 lg:pt-12">
+    <div className="min-h-screen bg-[#f3f3f3] pt-0 lg:pt-6">
       {/* Breadcrumb / Top Nav */}
-      <div className="max-w-[1920px] mx-auto pb-24 bg-[#f3f3f3]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+      <div className="max-w-[1920px] mx-auto pb-16 lg:pb-24 bg-[#f3f3f3]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
           {/* Left Column: Images + Desktop Description (Scrolls naturally) */}
-          <div className={`${isSingleImage ? 'lg:col-span-6 xl:col-span-6 max-w-[620px] mx-auto lg:mx-0' : 'lg:col-span-7 xl:col-span-8'} w-full px-2 sm:px-4 lg:pl-12 lg:pr-0`}>
+          <div className={`${isSingleImage ? 'lg:col-span-6 xl:col-span-6 max-w-[620px] mx-auto lg:mx-0' : 'lg:col-span-7 xl:col-span-8'} w-full px-0 sm:px-4 lg:pl-12 lg:pr-0`}>
             <ProductGallery images={product.images} title={product.title} />
 
             {/* Desktop-only Description & Details (Scrolls with the images) */}
