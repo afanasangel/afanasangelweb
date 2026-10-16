@@ -38,6 +38,7 @@ export interface ShopifyProduct {
   options: ShopifyProductOption[];
   variants: ShopifyVariant[];
   tags: string[];
+  collections?: Array<{ id: string; title: string; handle: string }>;
   vendor?: string;
   availableForSale?: boolean;
 }
@@ -133,6 +134,11 @@ function mapProductNode(p: any): ShopifyProduct {
       };
     }),
     tags: p.tags || [],
+    collections: (p.collections?.edges || []).map((e: any) => ({
+      id: e.node.id,
+      title: e.node.title,
+      handle: e.node.handle,
+    })),
     vendor: p.vendor,
     availableForSale: p.availableForSale,
   };
@@ -201,6 +207,15 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
                         name
                         value
                       }
+                    }
+                  }
+                }
+                collections(first: 10) {
+                  edges {
+                    node {
+                      id
+                      title
+                      handle
                     }
                   }
                 }
@@ -275,6 +290,15 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
                     name
                     value
                   }
+                }
+              }
+            }
+            collections(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  handle
                 }
               }
             }

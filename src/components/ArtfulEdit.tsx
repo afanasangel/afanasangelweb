@@ -1,15 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ShopifyProduct, ShopifyCollection } from "@/lib/shopify";
 
-type FilterType = "all" | "jalabiya" | "coords" | "couture";
+interface ArtfulEditProps {
+  initialProducts?: ShopifyProduct[];
+  initialCollections?: ShopifyCollection[];
+}
 
-export default function ArtfulEdit({ initialProducts = [] }: { initialProducts?: any[] }) {
-  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+export default function ArtfulEdit({
+  initialProducts = [],
+  initialCollections = [],
+}: ArtfulEditProps) {
+  const [activeCollectionHandle, setActiveCollectionHandle] = useState<string>("all");
+  const [collections, setCollections] = useState<ShopifyCollection[]>(initialCollections);
+  const [products, setProducts] = useState<ShopifyProduct[]>(initialProducts);
 
-  const fallbackItems = [
+  useEffect(() => {
+    if (initialCollections.length === 0) {
+      fetch("/api/collections")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.collections) {
+            setCollections(data.collections);
+          }
+        })
+        .catch((err) => console.error("Failed to load collections:", err));
+    }
+  }, [initialCollections.length]);
+
+  const fallbackItems: any[] = [
     {
       id: "1",
       handle: "1",
@@ -32,21 +54,42 @@ export default function ArtfulEdit({ initialProducts = [] }: { initialProducts?:
     },
   ];
 
-  const displayProducts = initialProducts.length > 0 ? initialProducts : fallbackItems;
+  const allProducts = products.length > 0 ? products : fallbackItems;
 
-  const filterButtonClasses = (filter: FilterType) =>
+  // Filter products based on selected collection tab
+  const displayedProducts =
+    activeCollectionHandle === "all"
+      ? allProducts
+      : allProducts.filter((p) => {
+          // Check product.collections
+          const hasInCollections = p.collections?.some(
+            (c: { handle: string; title: string }) =>
+              c.handle.toLowerCase() === activeCollectionHandle.toLowerCase()
+          );
+          if (hasInCollections) return true;
+
+          // Also check title or tags as fallback
+          const handleTerms = activeCollectionHandle.toLowerCase().split("-");
+          const matchesTitle = handleTerms.some((t: string) =>
+            p.title.toLowerCase().includes(t)
+          );
+          const matchesTag = p.tags?.some((tag: string) =>
+            tag.toLowerCase().includes(activeCollectionHandle.toLowerCase())
+          );
+          return matchesTitle || matchesTag;
+        });
+
+  const filterButtonClasses = (handle: string) =>
     `px-space-md py-space-xs font-label-caps-sm text-label-caps-sm uppercase tracking-wider transition-colors ${
-      activeFilter === filter
+      activeCollectionHandle === handle
         ? "bg-on-surface text-on-primary"
         : "bg-surface-container-lowest text-secondary hover:text-on-surface"
     }`;
 
-  const sizes = ["XS", "S", "M", "L", "Custom"];
-
   return (
     <section className="w-full bg-surface-container-low py-space-3xl" id="artful-edit">
       <div className="max-w-7xl mx-auto px-gutter">
-        {/* Section Header with Filter Pills */}
+        {/* Section Header with Dynamic Collection Filter Pills */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-space-2xl gap-space-md">
           <div>
             <span className="font-label-caps-sm text-label-caps-sm uppercase tracking-widest text-primary block mb-space-xs">
@@ -56,58 +99,66 @@ export default function ArtfulEdit({ initialProducts = [] }: { initialProducts?:
               Signature Haute Releases
             </h2>
           </div>
-          {/* Filter Tabs */}
+
+          {/* Dynamic Filter Tabs from Shopify */}
           <div className="flex flex-wrap gap-space-xs" id="productFilterNav">
             <button
               className={filterButtonClasses("all")}
-              onClick={() => setActiveFilter("all")}
+              onClick={() => setActiveCollectionHandle("all")}
             >
               All Silhouettes
             </button>
-            <button
-              className={filterButtonClasses("jalabiya")}
-              onClick={() => setActiveFilter("jalabiya")}
-            >
-              Jalabiyas
-            </button>
-            <button
-              className={filterButtonClasses("coords")}
-              onClick={() => setActiveFilter("coords")}
-            >
-              Co-Ords
-            </button>
-            <button
-              className={filterButtonClasses("couture")}
-              onClick={() => setActiveFilter("couture")}
-            >
-              Evening Haute
-            </button>
+            {collections.map((col) => (
+              <button
+                key={col.id || col.handle}
+                className={filterButtonClasses(col.handle)}
+                onClick={() => setActiveCollectionHandle(col.handle)}
+              >
+                {col.title}
+              </button>
+            ))}
           </div>
         </div>
+
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
-          {displayProducts.map((p) => (
-            <ProductCard
-              key={p.id}
-              id={p.handle || p.id}
-              tag={p.tag || (p.tags && p.tags[0]) || "New In"}
-              title={p.title}
-              category={p.category || "Pret Collection"}
-              price={p.price}
-              priceAed={p.originalPrice || p.priceAed || ""}
-              imageAlt={p.title}
-              imageUrl={p.imageUrl}
-              isVisible={true}
-            />
-          ))}
+          {displayedProducts.length > 0 ? (
+            displayedProducts.map((p) => (
+              <ProductCard
+                key={p.id}
+                id={p.handle || p.id}
+                tag={p.tag || (p.tags && p.tags[0]) || "New In"}
+                title={p.title}
+                category={
+                  p.collections && p.collections[0]
+                    ? p.collections[0].title
+                    : p.category || "Collection"
+                }
+                price={p.price}
+                priceAed={p.originalPrice || (p as any).priceAed || ""}
+                imageAlt={p.title}
+                imageUrl={p.imageUrl}
+                isVisible={true}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12 text-gray-500 tracking-widest uppercase text-sm">
+              No products found in this collection.
+            </div>
+          )}
         </div>
+
         {/* View All Button */}
         <div className="text-center mt-space-2xl">
           <Link
             className="inline-block bg-transparent text-primary hover:bg-surface-container px-space-2xl py-space-md font-label-caps-sm text-label-caps-sm uppercase tracking-widest transition-colors"
-            href="/shop"
+            href={
+              activeCollectionHandle === "all"
+                ? "/shop"
+                : `/shop?collection=${activeCollectionHandle}`
+            }
           >
-            VIEW ALL 48 ATELIER PIECES →
+            VIEW ALL PIECES →
           </Link>
         </div>
       </div>
