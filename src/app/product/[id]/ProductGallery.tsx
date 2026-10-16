@@ -143,15 +143,17 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             ))}
           </div>
         ) : (
-          <div className="relative w-full aspect-[3/4] bg-gray-200 overflow-hidden shadow-xs">
-            <Image
-              src={currentImage}
-              alt={title}
-              fill
-              className="object-cover"
-              sizes="50vw"
-              priority
-            />
+          <div className="w-full flex justify-center">
+            <div className="relative w-full max-w-[560px] aspect-[3/4] bg-gray-200 overflow-hidden shadow-xs rounded-xs">
+              <Image
+                src={currentImage}
+                alt={title}
+                fill
+                className="object-cover hover:scale-102 transition-transform duration-500"
+                sizes="(max-width: 1024px) 100vw, 560px"
+                priority
+              />
+            </div>
           </div>
         )}
       </div>
