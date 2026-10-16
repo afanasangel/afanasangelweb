@@ -165,29 +165,31 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       </div>
       
       {/* You May Also Like */}
-      <div className="border-t border-gray-200 bg-[#f3f3f3] py-16 px-4 md:px-12">
-        <h2 className="text-center font-headline-md text-2xl tracking-[0.2em] uppercase mb-16 text-black">YOU MAY ALSO LIKE</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-[1920px] mx-auto">
+      <div className="border-t border-gray-200 bg-[#f3f3f3] py-12 md:py-16 px-3 sm:px-6 md:px-12">
+        <h2 className="font-headline-md text-xl md:text-2xl font-bold tracking-[0.1em] text-black mb-8 md:mb-12">
+          You may also like
+        </h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-8 max-w-[1920px] mx-auto">
            {suggestedProducts.length > 0 ? (
              suggestedProducts.map((item: ShopifyProduct) => (
                <Link href={`/product/${item.handle}`} key={item.id} className="group relative block cursor-pointer">
-                  <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
+                  <div className="relative w-full aspect-[3/4] bg-gray-200 mb-3 sm:mb-4 overflow-hidden rounded-xs">
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                     />
                     {item.tags[0] && (
-                      <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{item.tags[0]}</span>
+                      <span className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-[#e22d2d] text-white text-[9px] sm:text-[10px] tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 uppercase z-10">{item.tags[0]}</span>
                     )}
                   </div>
-                  <h3 className="text-xs tracking-widest uppercase text-black mb-2 truncate">{item.title}</h3>
-                  <div className="flex items-center gap-3 text-xs tracking-widest">
-                    <span className="text-[#e22d2d] font-medium">{item.price}</span>
+                  <h3 className="text-xs sm:text-sm font-medium text-black mb-1 line-clamp-2">{item.title}</h3>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm">
+                    <span className="text-[#e22d2d] font-semibold">{item.price}</span>
                     {item.originalPrice && (
-                      <span className="text-gray-400 line-through">{item.originalPrice}</span>
+                      <span className="text-gray-400 line-through text-[11px] sm:text-xs">{item.originalPrice}</span>
                     )}
                   </div>
                </Link>
@@ -198,20 +200,20 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                const sugProduct = isAlternate ? fallbackProducts["2"] : fallbackProducts["1"];
                return (
                  <Link href={`/product/${isAlternate ? "2" : "1"}`} key={i} className="group relative block cursor-pointer">
-                    <div className="relative w-full aspect-[3/4] bg-gray-200 mb-6 overflow-hidden">
+                    <div className="relative w-full aspect-[3/4] bg-gray-200 mb-3 sm:mb-4 overflow-hidden rounded-xs">
                       <Image
                         src={sugProduct.image}
                         alt={sugProduct.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                       />
-                      <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-10">{sugProduct.saleTag}</span>
+                      <span className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-[#e22d2d] text-white text-[9px] sm:text-[10px] tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 uppercase z-10">{sugProduct.saleTag}</span>
                     </div>
-                    <h3 className="text-xs tracking-widest uppercase text-black mb-2">{sugProduct.title.replace(" - 42602310", ` - 4260231${i}`).replace(" - 42602311", ` - 4260231${i}`)}</h3>
-                    <div className="flex items-center gap-3 text-xs tracking-widest">
-                      <span className="text-[#e22d2d] font-medium">{sugProduct.price}</span>
-                      <span className="text-gray-400 line-through">{sugProduct.originalPrice}</span>
+                    <h3 className="text-xs sm:text-sm font-medium text-black mb-1 line-clamp-2">{sugProduct.title.replace(" - 42602310", ` - 4260231${i}`).replace(" - 42602311", ` - 4260231${i}`)}</h3>
+                    <div className="flex items-center gap-2 text-xs sm:text-sm">
+                      <span className="text-[#e22d2d] font-semibold">{sugProduct.price}</span>
+                      <span className="text-gray-400 line-through text-[11px] sm:text-xs">{sugProduct.originalPrice}</span>
                     </div>
                  </Link>
                );
