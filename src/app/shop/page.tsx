@@ -118,21 +118,8 @@ export default async function ShopPage({
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-col md:flex-row items-center justify-between border-t border-b border-gray-200 py-4 mb-8 text-[10px] md:text-[11px] tracking-widest text-gray-500 uppercase">
-          <div className="flex items-center gap-4 mb-4 md:mb-0">
-            <span className="material-symbols-outlined text-[18px] text-gray-400 cursor-pointer hover:text-black transition-colors">grid_view</span>
-            <span className="material-symbols-outlined text-[18px] text-gray-400 cursor-pointer hover:text-black transition-colors">view_module</span>
-            <span className="material-symbols-outlined text-[18px] text-gray-400 cursor-pointer hover:text-black transition-colors">view_list</span>
-          </div>
-          <div className="text-center flex-1 font-medium">
-            {products.length} PRODUCTS
-          </div>
-          <div className="flex items-center gap-8">
-            <button className="flex items-center gap-1 hover:text-black transition-colors font-medium">
-              SORT BY <span className="material-symbols-outlined text-sm">expand_more</span>
-            </button>
-            <button className="hover:text-black transition-colors font-medium text-left border-l border-gray-200 pl-8">FILTER</button>
-          </div>
+        <div className="flex items-center justify-center border-t border-b border-gray-200 py-3 mb-8 text-[11px] tracking-[0.2em] text-gray-600 uppercase font-medium">
+          {products.length} {products.length === 1 ? "PRODUCT" : "PRODUCTS"}
         </div>
 
         {/* Product Grid */}
