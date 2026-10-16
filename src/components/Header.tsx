@@ -15,6 +15,31 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [collections, setCollections] = useState<Array<{ id: string; title: string; handle: string }>>([
+    { id: "1", title: "Budget Friendly Abaya", handle: "budget-friendly-abaya" },
+    { id: "2", title: "Abaya", handle: "abaya" },
+    { id: "3", title: "Premium Abaya", handle: "premium-abaya" },
+    { id: "4", title: "Pakistani Suit", handle: "pakistani-suit" },
+    { id: "5", title: "Premium Pakistani Suits", handle: "premium-pakistani-suit" },
+    { id: "6", title: "Bridal Collections", handle: "bridal-collections" },
+  ]);
+
+  useEffect(() => {
+    async function loadCollections() {
+      try {
+        const res = await fetch("/api/collections");
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.collections && data.collections.length > 0) {
+            setCollections(data.collections);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load collections for menu:", e);
+      }
+    }
+    loadCollections();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,24 +127,16 @@ export default function Header() {
           </button>
         </div>
         <nav className="flex flex-col py-6 px-6 gap-6 overflow-y-auto">
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=budget-friendly-abaya">
-            Budget Friendly Abaya
-          </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=abaya">
-            Abaya
-          </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=premium-abaya">
-            Premium Abaya
-          </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=pakistani-suit">
-            Pakistani Suit
-          </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=premium-pakistani-suit">
-            Premium Pakistani Suits
-          </Link>
-          <Link onClick={() => setIsMenuOpen(false)} className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors" href="/shop?collection=bridal-collections">
-            Bridal Collections
-          </Link>
+          {collections.map((col) => (
+            <Link
+              key={col.id || col.handle}
+              onClick={() => setIsMenuOpen(false)}
+              className="text-[14px] uppercase tracking-[0.15em] font-medium text-gray-800 hover:text-[#cda662] transition-colors"
+              href={`/shop?collection=${col.handle}`}
+            >
+              {col.title}
+            </Link>
+          ))}
         </nav>
       </div>
     </>

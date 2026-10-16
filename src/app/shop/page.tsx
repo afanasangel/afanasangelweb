@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getShopifyProducts } from "@/lib/shopify";
+import { getShopifyProducts, getShopifyCollections } from "@/lib/shopify";
 
 const fallbackProducts = [
   {
@@ -49,23 +49,39 @@ export default async function ShopPage({
   const resolvedSearchParams = await searchParams;
   const currentCollection = resolvedSearchParams?.collection;
 
-  const shopifyProducts = await getShopifyProducts(currentCollection, 50);
+  const [shopifyProducts, liveCollections] = await Promise.all([
+    getShopifyProducts(currentCollection, 50),
+    getShopifyCollections(50),
+  ]);
+
   const products = shopifyProducts.length > 0 ? shopifyProducts : fallbackProducts;
 
-  const collectionTitle = currentCollection
+  const activeCollectionObj = liveCollections.find((c) => c.handle === currentCollection);
+  const collectionTitle = activeCollectionObj
+    ? activeCollectionObj.title
+    : currentCollection
     ? currentCollection
         .split("-")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ")
     : "Ready to Wear";
 
+  // Build collection tabs dynamically from Shopify with fallback
   const collectionTabs = [
     { label: "All", href: "/shop", active: !currentCollection },
-    { label: "Premium Abaya", href: "/shop?collection=premium-abaya", active: currentCollection === "premium-abaya" },
-    { label: "Abaya", href: "/shop?collection=abaya", active: currentCollection === "abaya" },
-    { label: "Pakistani Suit", href: "/shop?collection=pakistani-suit", active: currentCollection === "pakistani-suit" },
-    { label: "Premium Pakistani Suits", href: "/shop?collection=premium-pakistani-suit", active: currentCollection === "premium-pakistani-suit" },
-    { label: "Co-ords Sets", href: "/shop?collection=coords", active: currentCollection === "coords" },
+    ...(liveCollections.length > 0
+      ? liveCollections.map((col) => ({
+          label: col.title,
+          href: `/shop?collection=${col.handle}`,
+          active: currentCollection === col.handle,
+        }))
+      : [
+          { label: "Premium Abaya", href: "/shop?collection=premium-abaya", active: currentCollection === "premium-abaya" },
+          { label: "Abaya", href: "/shop?collection=abaya", active: currentCollection === "abaya" },
+          { label: "Pakistani Suit", href: "/shop?collection=pakistani-suit", active: currentCollection === "pakistani-suit" },
+          { label: "Premium Pakistani Suits", href: "/shop?collection=premium-pakistani-suit", active: currentCollection === "premium-pakistani-suit" },
+          { label: "Co-ords Sets", href: "/shop?collection=coords", active: currentCollection === "coords" },
+        ]),
   ];
 
   return (
