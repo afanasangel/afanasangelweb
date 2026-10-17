@@ -101,7 +101,7 @@ export default function ArtfulEdit({
               <ProductCard
                 key={p.id}
                 id={p.handle || p.id}
-                tag={(p.tags && p.tags[0]) || "New In"}
+                tag=""
                 title={p.title}
                 category={
                   p.collections && p.collections[0]
