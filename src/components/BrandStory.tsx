@@ -34,33 +34,9 @@ export default function BrandStory() {
           <p className="font-body-lg text-body-lg text-secondary mb-space-md">
             Founded on the principle that luxury modest fashion should possess both the gravitas of Middle Eastern heritage and the crisp precision of global haute couture, Afana's Angel transforms ancestral textiles into modern icons.
           </p>
-          <p className="font-body-md text-body-md text-secondary mb-space-xl">
+          <p className="font-body-md text-body-md text-secondary">
             Every piece is designed within our private Downtown Dubai salon, woven from organic unadulterated silks, and rendered with custom 24k gold bullion needlework that requires weeks of focused artisanal concentration.
           </p>
-          <div className="grid grid-cols-2 gap-space-lg w-full mb-space-xl">
-            <div className="bg-surface-container-low p-space-md">
-              <span className="font-label-caps-sm text-label-caps-sm uppercase text-primary tracking-wider block mb-1">
-                BESPOKE SIZING
-              </span>
-              <p className="font-body-sm text-body-sm text-secondary">
-                Every silhouette can be customized to your precise measurements with our master tailors.
-              </p>
-            </div>
-            <div className="bg-surface-container-low p-space-md">
-              <span className="font-label-caps-sm text-label-caps-sm uppercase text-primary tracking-wider block mb-1">
-                ROYAL BRIDAL SUITE
-              </span>
-              <p className="font-body-sm text-body-sm text-secondary">
-                Private salons available by invitation in Downtown Dubai and London Mayfair.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="#"
-            className="bg-on-surface text-on-primary hover:bg-primary px-space-xl py-space-md font-label-caps-sm text-label-caps-sm uppercase tracking-widest transition-colors"
-          >
-            BOOK A PRIVATE ATELIER APPOINTMENT
-          </Link>
         </div>
       </div>
     </section>
