@@ -69,9 +69,6 @@ export default function ArtfulEdit({
         {/* Section Header with Dynamic Collection Filter Pills */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 md:mb-space-2xl gap-3 md:gap-space-md">
           <div>
-            <span className="font-label-caps-sm text-[10px] md:text-label-caps-sm uppercase tracking-widest text-primary block mb-1 md:mb-space-xs">
-              THE ARTFUL EDIT
-            </span>
             <h2 className="font-headline-xl text-2xl sm:text-3xl md:text-headline-xl text-on-surface">
               Signature Haute Releases
             </h2>
