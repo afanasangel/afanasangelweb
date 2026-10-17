@@ -59,21 +59,21 @@ export default function OurStores() {
           </h2>
         </div>
 
-        {/* Stores Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        {/* Stores Container: Horizontal snap scroll on mobile, 2-column grid on desktop */}
+        <div className="flex lg:grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none snap-x snap-mandatory">
           {STORES.map((store) => (
             <div
               key={store.id}
-              className="bg-white rounded-2xl border border-gray-200/80 shadow-xs hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col sm:flex-row items-stretch"
+              className="bg-white rounded-2xl border border-gray-200/80 shadow-xs hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col sm:flex-row items-stretch w-[84vw] max-w-[340px] sm:max-w-none sm:w-auto shrink-0 snap-center"
             >
               {/* Store Image Container */}
-              <div className="relative w-full sm:w-[240px] md:w-[260px] aspect-[4/3] sm:aspect-auto sm:min-h-[290px] shrink-0 bg-gray-100 overflow-hidden">
+              <div className="relative w-full sm:w-[220px] md:w-[260px] aspect-[4/3] sm:aspect-auto sm:min-h-[290px] shrink-0 bg-gray-100 overflow-hidden">
                 <Image
                   src={store.imageUrl}
                   alt={store.name}
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 640px) 100vw, 260px"
+                  sizes="(max-width: 640px) 84vw, 260px"
                 />
                 {/* Badge Tag */}
                 <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-gray-900 text-[10px] font-semibold tracking-wider px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1.5 uppercase">
