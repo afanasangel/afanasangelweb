@@ -29,7 +29,7 @@ const STORES: Store[] = [
     instagram: "@afanasangel",
     instagramUrl: "https://www.instagram.com/ainvogue.in",
     mapUrl: "https://maps.app.goo.gl/4Br6NzsU8kEqtmgk8?g_st=iw",
-    imageUrl: "/store_india.jpg",
+    imageUrl: "/store_india_real.jpg",
   },
   {
     id: "uae-dubai",
@@ -42,7 +42,7 @@ const STORES: Store[] = [
     instagram: "@afanasangel",
     instagramUrl: "https://www.instagram.com/afanasangel",
     mapUrl: "https://maps.app.goo.gl/Fd7RzNWvBpZJ4v5r8?g_st=iw",
-    imageUrl: "/store_dubai.jpg",
+    imageUrl: "/store_dubai_real.jpg",
     hasWhatsApp: true,
     whatsappUrl: "https://wa.me/971501234567",
   },
