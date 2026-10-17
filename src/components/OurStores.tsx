@@ -21,7 +21,7 @@ const STORES: Store[] = [
   {
     id: "india-kasaragod",
     badge: "Flagship Store",
-    name: "Ain Vogue India",
+    name: "Afana's Angel India",
     cityState: "Kasaragod, Keralam",
     address: "Ground Floor, Maryam Trade Centre, Old Bus Stand, Kasaragod, Kerala 671121",
     phone: "+91 96563 63263",
@@ -32,10 +32,10 @@ const STORES: Store[] = [
     imageUrl: "/store_india.jpg",
   },
   {
-    id: "qatar-doha",
-    badge: "Now In Qatar",
-    name: "Ain Vogue Qatar",
-    cityState: "Doha, Qatar",
+    id: "uae-dubai",
+    badge: "Now In Dubai",
+    name: "Afana's Angel Dubai",
+    cityState: "Dubai, UAE",
     address: "Souq Nassir Bin Saif, Doha, Qatar Opposite Al Fanar Masjid (Fanar Mosque)",
     phone: "+974 3038 5566",
     phoneRaw: "+97430385566",
