@@ -3,7 +3,7 @@ import Link from "next/link";
 
 interface Store {
   id: string;
-  badge: string;
+  badge?: string;
   name: string;
   cityState: string;
   address: string;
@@ -20,20 +20,18 @@ interface Store {
 const STORES: Store[] = [
   {
     id: "india-kasaragod",
-    badge: "Flagship Store",
     name: "Afana's Angel India",
     cityState: "Kasaragod, Keralam",
     address: "Ground Floor, Maryam Trade Centre, Old Bus Stand, Kasaragod, Kerala 671121",
     phone: "+91 96563 63263",
     phoneRaw: "+919656363263",
     instagram: "@afanasangel",
-    instagramUrl: "https://www.instagram.com/ainvogue.in",
+    instagramUrl: "https://www.instagram.com/afanasangel",
     mapUrl: "https://maps.app.goo.gl/4Br6NzsU8kEqtmgk8?g_st=iw",
     imageUrl: "/store_india_real.jpg",
   },
   {
     id: "uae-dubai",
-    badge: "Now In Dubai",
     name: "Afana's Angel Dubai",
     cityState: "Dubai, UAE",
     address: "Angel & Codex, Al Khaleej - Zaa'beel St, Al Karama, Dubai, United Arab Emirates",
@@ -75,11 +73,6 @@ export default function OurStores() {
                   className="object-cover hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 640px) 84vw, 260px"
                 />
-                {/* Badge Tag */}
-                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-gray-900 text-[10px] font-semibold tracking-wider px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1.5 uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#b45309]" />
-                  <span>{store.badge}</span>
-                </div>
               </div>
 
               {/* Store Information Content */}
