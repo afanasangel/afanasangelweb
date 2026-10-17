@@ -31,30 +31,7 @@ export default function ArtfulEdit({
     }
   }, [initialCollections.length]);
 
-  const fallbackItems: any[] = [
-    {
-      id: "1",
-      handle: "1",
-      tag: "Selling Fast",
-      title: "Tropical Style Printed Shirt",
-      category: "Pret Collection",
-      price: "$145",
-      priceAed: "AED 530",
-      imageUrl: "/IMG_6494.JPG",
-    },
-    {
-      id: "2",
-      handle: "2",
-      tag: "New In",
-      title: "Ethereal Green Floral Tunic",
-      category: "Summer Edit",
-      price: "$165",
-      priceAed: "AED 600",
-      imageUrl: "/IMG_6545.JPG",
-    },
-  ];
-
-  const allProducts = products.length > 0 ? products : fallbackItems;
+  const allProducts = products;
 
   // Filter products based on selected collection tab
   const displayedProducts =
@@ -127,7 +104,7 @@ export default function ArtfulEdit({
               <ProductCard
                 key={p.id}
                 id={p.handle || p.id}
-                tag={p.tag || (p.tags && p.tags[0]) || "New In"}
+                tag={(p.tags && p.tags[0]) || "New In"}
                 title={p.title}
                 category={
                   p.collections && p.collections[0]
@@ -135,7 +112,7 @@ export default function ArtfulEdit({
                     : p.category || "Collection"
                 }
                 price={p.price}
-                priceAed={p.originalPrice || (p as any).priceAed || ""}
+                priceAed={p.originalPrice || ""}
                 imageAlt={p.title}
                 imageUrl={p.imageUrl}
                 isVisible={true}
