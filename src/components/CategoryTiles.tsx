@@ -18,95 +18,141 @@ export default function CategoryTiles() {
         </p>
       </div>
 
-      {/* Grid: 2 columns on mobile, 4 columns on desktop */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-0">
-        {/* Category 1 */}
+      {/* Grid: 2 columns on mobile, 3 columns on tablet/desktop, 6 total categories */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-3 lg:gap-4">
+        {/* Category 1: Abaya */}
         <Link
           href="/shop?collection=abaya"
-          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-xs"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
         >
           <Image
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             alt="Abaya"
             src="/cat_abaya.jpg"
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-100"></div>
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 flex flex-col items-start z-10">
-            <h3 className="font-headline-md text-sm sm:text-base md:text-headline-md text-white mb-1.5 md:mb-4 uppercase tracking-widest leading-snug">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
               Abaya
             </h3>
-            <span className="font-label-caps-sm text-[10px] sm:text-xs md:text-sm uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
               SHOP NOW
             </span>
           </div>
         </Link>
 
-        {/* Category 2 */}
+        {/* Category 2: Premium Abaya */}
         <Link
           href="/shop?collection=premium-abaya"
-          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-xs"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
         >
           <Image
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             alt="Premium Abaya"
             src="/cat_premium_abaya.jpg"
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-100"></div>
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 flex flex-col items-start z-10">
-            <h3 className="font-headline-md text-sm sm:text-base md:text-headline-md text-white mb-1.5 md:mb-4 uppercase tracking-widest leading-snug">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
               Premium Abaya
             </h3>
-            <span className="font-label-caps-sm text-[10px] sm:text-xs md:text-sm uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
               SHOP NOW
             </span>
           </div>
         </Link>
 
-        {/* Category 3 */}
+        {/* Category 3: Budget Friendly Suit */}
+        <Link
+          href="/shop?collection=budget-friendly-abaya"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
+        >
+          <Image
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            alt="Budget Friendly Suit"
+            src="/cat_budget_friendly_suit.jpg"
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
+              Budget Friendly Suit
+            </h3>
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+              SHOP NOW
+            </span>
+          </div>
+        </Link>
+
+        {/* Category 4: Pakistani Suit */}
         <Link
           href="/shop?collection=pakistani-suit"
-          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-xs"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
         >
           <Image
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             alt="Pakistani Suit"
             src="/cat_pakistani_suit.jpg"
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-100"></div>
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 flex flex-col items-start z-10">
-            <h3 className="font-headline-md text-sm sm:text-base md:text-headline-md text-white mb-1.5 md:mb-4 uppercase tracking-widest leading-snug">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
               Pakistani Suit
             </h3>
-            <span className="font-label-caps-sm text-[10px] sm:text-xs md:text-sm uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
               SHOP NOW
             </span>
           </div>
         </Link>
 
-        {/* Category 4 */}
+        {/* Category 5: Premium Pakistani Suit */}
         <Link
           href="/shop?collection=premium-pakistani-suit"
-          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-xs"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
         >
           <Image
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             alt="Premium Pakistani Suits"
             src="/cat_premium_pakistani_suit.jpg"
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-100"></div>
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 flex flex-col items-start z-10">
-            <h3 className="font-headline-md text-sm sm:text-base md:text-headline-md text-white mb-1.5 md:mb-4 uppercase tracking-widest leading-snug">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
               Pakistani Suits
             </h3>
-            <span className="font-label-caps-sm text-[10px] sm:text-xs md:text-sm uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
+              SHOP NOW
+            </span>
+          </div>
+        </Link>
+
+        {/* Category 6: Co-ord Sets */}
+        <Link
+          href="/shop?collection=coords"
+          className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[580px] rounded-xs"
+        >
+          <Image
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            alt="Co-ord Sets"
+            src="/cat_coord_set.jpg"
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-100"></div>
+          <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col items-start z-10">
+            <h3 className="font-headline-md text-xs sm:text-sm md:text-base text-white mb-1 sm:mb-2 uppercase tracking-widest leading-snug">
+              Co-ord Sets
+            </h3>
+            <span className="font-label-caps-sm text-[9px] sm:text-[11px] md:text-xs uppercase text-white tracking-widest inline-flex items-center border-b border-white pb-0.5 hover:text-gray-200 hover:border-gray-200 transition-colors">
               SHOP NOW
             </span>
           </div>
