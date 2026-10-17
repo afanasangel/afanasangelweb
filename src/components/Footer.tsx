@@ -53,17 +53,18 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: INFORMATION */}
+          {/* Column 2: QUICK LINKS */}
           <div className="flex flex-col space-y-3">
             <h4 className="font-label-caps-sm text-sm uppercase tracking-widest text-black mb-3 font-medium">
-              INFORMATION
+              QUICK LINKS
             </h4>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Blogs</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">About Us</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Catalogues</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Privacy Policy</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Terms &amp; Conditions</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Terms &amp; Conditions Boutique</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop">All Collections</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=budget-friendly-abaya">Budget Friendly Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=abaya">Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=premium-abaya">Premium Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=pakistani-suit">Pakistani Suit</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=premium-pakistani-suit">Premium Pakistani Suits</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=bridal-collections">Bridal Collections</Link>
           </div>
 
           {/* Column 3: CUSTOMER SERVICES */}
