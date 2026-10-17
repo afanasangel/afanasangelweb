@@ -55,14 +55,16 @@ export default function CartDrawer() {
             <div className="flex flex-col gap-8">
               {items.map((item, index) => (
                 <div key={`${item.id}-${index}`} className="flex gap-4">
-                  <div className="relative w-[120px] aspect-[3/4] bg-gray-200 flex-shrink-0">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                      sizes="120px"
-                    />
+                  <div className="relative w-[120px] aspect-[3/4] bg-gray-100 flex-shrink-0">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                        sizes="120px"
+                      />
+                    ) : null}
                   </div>
                   <div className="flex flex-col flex-1 pt-1">
                     <h3 className="text-xs font-medium text-black uppercase tracking-widest mb-1 leading-relaxed">

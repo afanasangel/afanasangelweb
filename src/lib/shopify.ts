@@ -97,9 +97,8 @@ function mapProductNode(p: any): ShopifyProduct {
   const currency = p.priceRange?.minVariantPrice?.currencyCode || "INR";
   const compareAmount = parseFloat(p.compareAtPriceRange?.minVariantPrice?.amount || firstVariant?.compareAtPrice?.amount || "0");
   
-  const imageUrl = p.images?.edges?.[0]?.node?.url || "/IMG_6494.JPG";
+  const imageUrl = p.images?.edges?.[0]?.node?.url || "";
   const images = (p.images?.edges || []).map((img: any) => img.node.url);
-  if (images.length === 0) images.push(imageUrl);
 
   return {
     id: p.id,

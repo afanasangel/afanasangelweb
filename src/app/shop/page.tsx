@@ -93,14 +93,16 @@ export default async function ShopPage({
 
               return (
                 <Link key={product.id} href={linkHref} className="group flex flex-col relative cursor-pointer block">
-                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-200 mb-4">
-                    <Image
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      alt={product.title}
-                      src={product.imageUrl}
-                      fill
-                      sizes="(max-width: 640px) 50vw, 25vw"
-                    />
+                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100 mb-4">
+                    {product.imageUrl ? (
+                      <Image
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        alt={product.title}
+                        src={product.imageUrl}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 25vw"
+                      />
+                    ) : null}
                     {tag && (
                       <span className="absolute top-4 left-4 bg-[#e22d2d] text-white text-[10px] tracking-widest px-2 py-1 uppercase z-20">
                         {tag}

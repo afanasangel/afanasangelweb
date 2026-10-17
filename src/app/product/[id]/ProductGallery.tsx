@@ -12,14 +12,16 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
-  const displayImages = images.length > 0 ? images : ["/IMG_6494.JPG"];
-  const currentImage = displayImages[activeImageIndex] || displayImages[0];
+  const displayImages = images.filter(Boolean);
+  const currentImage = displayImages[activeImageIndex] || displayImages[0] || "";
 
   const handlePrev = () => {
+    if (displayImages.length <= 1) return;
     setActiveImageIndex((prev) => (prev > 0 ? prev - 1 : displayImages.length - 1));
   };
 
   const handleNext = () => {
+    if (displayImages.length <= 1) return;
     setActiveImageIndex((prev) => (prev < displayImages.length - 1 ? prev + 1 : 0));
   };
 
@@ -40,25 +42,23 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
 
   return (
     <div className="w-full">
-      {/* =========================================================================
-          MOBILE VIEW (< lg): Single active image hero with swipe, arrows, counter & thumbnails.
-          Kept EXACTLY as is.
-         ========================================================================= */}
+      {/* Mobile view (< lg) */}
       <div className="block lg:hidden w-full">
-        {/* Main Single Active Image */}
         <div
-          className="relative w-full aspect-[3/4] bg-gray-200 overflow-hidden select-none touch-pan-y"
+          className="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden select-none touch-pan-y"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <Image
-            src={currentImage}
-            alt={`${title} image ${activeImageIndex + 1}`}
-            fill
-            className="object-cover transition-opacity duration-300"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 50vw"
-            priority
-          />
+          {currentImage ? (
+            <Image
+              src={currentImage}
+              alt={`${title} image ${activeImageIndex + 1}`}
+              fill
+              className="object-cover transition-opacity duration-300"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 50vw"
+              priority
+            />
+          ) : null}
 
           {/* Left / Right arrows */}
           {displayImages.length > 1 && (
@@ -145,14 +145,16 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
         ) : (
           <div className="w-full flex justify-center items-start">
             <div className="relative w-full max-w-[480px] h-[calc(100vh-150px)] max-h-[720px] bg-[#f3f3f3] overflow-hidden shadow-xs rounded-xs flex items-center justify-center">
-              <Image
-                src={currentImage}
-                alt={title}
-                fill
-                className="object-contain hover:scale-102 transition-transform duration-500"
-                sizes="(max-width: 1024px) 70vw, 480px"
-                priority
-              />
+              {currentImage ? (
+                <Image
+                  src={currentImage}
+                  alt={title}
+                  fill
+                  className="object-contain hover:scale-102 transition-transform duration-500"
+                  sizes="(max-width: 1024px) 70vw, 480px"
+                  priority
+                />
+              ) : null}
             </div>
           </div>
         )}

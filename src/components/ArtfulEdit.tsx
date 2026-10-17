@@ -168,14 +168,16 @@ function ProductCard({
 
   return (
     <Link href={`/product/${id}`} className="group flex flex-col relative cursor-pointer block">
-      <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-200 mb-2.5 sm:mb-4 rounded-xs">
-        <Image
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          alt={imageAlt}
-          src={imageUrl}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-        />
+      <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100 mb-2.5 sm:mb-4 rounded-xs">
+        {imageUrl ? (
+          <Image
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            alt={imageAlt}
+            src={imageUrl}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        ) : null}
         {tag && (
           <span className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-[#e22d2d] text-white text-[9px] sm:text-[10px] tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 uppercase z-20">
             {tag}
