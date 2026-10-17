@@ -12,13 +12,13 @@ export default function Footer() {
               CONTACT US
             </h4>
             <div className="space-y-1">
-              <p className="font-body-sm font-medium text-gray-800">Flagship Store (India):</p>
+              <p className="font-body-sm font-medium text-gray-800">India:</p>
               <p className="font-body-sm text-gray-500 text-xs leading-relaxed">
                 Ground Floor, Maryam Trade Centre, Old Bus Stand, Kasaragod, Kerala 671121
               </p>
             </div>
             <div className="space-y-1">
-              <p className="font-body-sm font-medium text-gray-800">Dubai Boutique:</p>
+              <p className="font-body-sm font-medium text-gray-800">UAE:</p>
               <p className="font-body-sm text-gray-500 text-xs leading-relaxed">
                 Angel & Codex, Al Khaleej - Zaa'beel St, Al Karama, Dubai, UAE
               </p>
