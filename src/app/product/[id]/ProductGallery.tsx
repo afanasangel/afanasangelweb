@@ -56,7 +56,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             alt={`${title} image ${activeImageIndex + 1}`}
             fill
             className="object-cover transition-opacity duration-300"
-            sizes="100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 50vw"
             priority
           />
 
@@ -150,7 +150,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
                 alt={title}
                 fill
                 className="object-contain hover:scale-102 transition-transform duration-500"
-                sizes="(max-width: 1024px) 100vw, 480px"
+                sizes="(max-width: 1024px) 70vw, 480px"
                 priority
               />
             </div>
