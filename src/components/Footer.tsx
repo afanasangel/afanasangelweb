@@ -86,13 +86,6 @@ export default function Footer() {
           <p className="font-body-sm text-xs text-gray-500 uppercase tracking-widest">
             © 2026 - AFANA'S ANGEL
           </p>
-          <div className="flex items-center gap-3">
-             <span className="font-bold italic text-black text-xl">VISA</span>
-             <div className="flex items-center relative w-8 h-8 opacity-80">
-               <div className="w-5 h-5 rounded-full bg-red-500 absolute left-0 mix-blend-multiply"></div>
-               <div className="w-5 h-5 rounded-full bg-orange-400 absolute left-3 mix-blend-multiply"></div>
-             </div>
-          </div>
         </div>
       </div>
     </footer>
