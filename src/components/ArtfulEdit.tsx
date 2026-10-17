@@ -70,7 +70,7 @@ export default function ArtfulEdit({
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 md:mb-space-2xl gap-3 md:gap-space-md">
           <div>
             <h2 className="font-headline-xl text-2xl sm:text-3xl md:text-headline-xl text-on-surface">
-              Signature Haute Releases
+              New Arrivals
             </h2>
           </div>
 
