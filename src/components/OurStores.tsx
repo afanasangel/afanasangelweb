@@ -21,7 +21,7 @@ const STORES: Store[] = [
   {
     id: "india-kasaragod",
     name: "Afana's Angel India",
-    cityState: "Kasaragod, Keralam",
+    cityState: "Kasaragod, Kerala",
     address: "Ground Floor, Maryam Trade Centre, Old Bus Stand, Kasaragod, Kerala 671121",
     phone: "+91 96563 63263",
     phoneRaw: "+919656363263",
