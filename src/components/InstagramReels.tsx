@@ -69,7 +69,7 @@ function ReelCard({ reel }: { reel: ReelItem }) {
   return (
     <div
       onClick={togglePlay}
-      className="group relative flex-shrink-0 w-[240px] sm:w-[260px] md:w-[280px] aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-black select-none border border-stone-200/50"
+      className="group relative flex-shrink-0 w-[68vw] max-w-[280px] sm:w-[260px] md:w-[280px] aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-black select-none border border-stone-200/50 snap-center"
     >
       {/* Video Element */}
       <video
@@ -150,10 +150,10 @@ export default function InstagramReels() {
   }, []);
 
   return (
-    <section className="w-full bg-[#fcfbfa] py-14 md:py-20 border-y border-[#ede8e1]">
+    <section className="w-full bg-[#fcfbfa] py-12 md:py-20 border-y border-[#ede8e1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-6 md:mb-8">
           <div>
             <h3 className="text-xl md:text-2xl font-serif font-semibold text-zinc-900 tracking-tight">
               AFANA’S Angel Diaries
@@ -167,15 +167,15 @@ export default function InstagramReels() {
             href="https://www.instagram.com/afanasangel"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-900 hover:text-amber-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-900 hover:text-amber-700 transition-colors shrink-0"
           >
             <span>View All</span>
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
           </Link>
         </div>
 
-        {/* Dynamic Video Reel Cards Row */}
-        <div className="flex items-center gap-4 md:gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth">
+        {/* Dynamic Video Reel Cards: Side-scrolling carousel on mobile & desktop matching OurStores */}
+        <div className="flex items-center gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none snap-x snap-mandatory scroll-smooth">
           {reels.map((reel) => (
             <ReelCard key={reel.id} reel={reel} />
           ))}
