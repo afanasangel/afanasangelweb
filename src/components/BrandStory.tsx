@@ -6,21 +6,22 @@ export default function BrandStory() {
     <section className="max-w-7xl mx-auto px-gutter py-space-3xl w-full">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-center">
         <div className="lg:col-span-5 relative">
-          <div className="relative w-full aspect-[4/5] overflow-hidden bg-surface-container">
+          <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] overflow-hidden rounded-xl bg-surface-container shadow-sm border border-stone-200/80">
             <Image
-              className="w-full h-full object-cover"
-              alt="Fashion designer Afana Shammaz hands inspecting gold embroidery threads"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs-zXZDfqRG4OgjKk5F4gIcBQI4IBaS1S7l32K7cFCg8ynnM7i-hvpfoPV05Dtz3bQr0nb6a-1jpBnktQ6G5iMj28VswaBj6MOSZ7E5reWmkk5cPest1jM_GFPNZR9SVFj156CzZUOIVAzg9mP6gyOMU6kGqjW0xGaJmbIW3QqJ5bOrdI15__6IbgANE6RgUFULEuQxg8I7C9td-8T3ym7bx_WW_uVyFHbiQrvDfU02P82J_AReDuHXA"
+              className="w-full h-full object-cover object-top"
+              alt="Afana and Shammaz - Founders of AFANA'S Angel"
+              src="/afana-shammaz.jpg"
               fill
+              priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
-          <div className="absolute -bottom-space-md -right-space-md bg-surface-container-lowest p-space-md max-w-[240px] shadow-lg hidden sm:block">
+          <div className="absolute -bottom-space-md -right-space-md bg-surface-container-lowest p-space-md max-w-[260px] shadow-lg border border-stone-100 hidden sm:block rounded-lg">
             <span className="font-headline-sm text-headline-sm text-primary block mb-1">
-              Afana Shammaz
+              Afana &amp; Shammaz
             </span>
             <span className="font-body-sm text-body-sm text-secondary block">
-              Founder &amp; Creative Director
+              Founders, AFANA’S Angel
             </span>
           </div>
         </div>
