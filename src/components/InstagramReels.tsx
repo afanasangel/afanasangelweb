@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 
 interface ReelItem {
@@ -10,7 +10,7 @@ interface ReelItem {
   title: string;
 }
 
-const REELS: ReelItem[] = [
+const INITIAL_REELS: ReelItem[] = [
   {
     id: "DYmXZfxo_M-",
     videoSrc: "/reels/DYmXZfxo_M-.mp4",
@@ -96,7 +96,7 @@ function ReelCard({ reel }: { reel: ReelItem }) {
         </span>
       </button>
 
-      {/* Play/Pause Center Indicator (shows when paused or hover) */}
+      {/* Play/Pause Center Indicator */}
       {!isPlaying && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/25 backdrop-blur-[1px]">
           <div className="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white shadow-lg transition-transform transform scale-100">
@@ -105,7 +105,7 @@ function ReelCard({ reel }: { reel: ReelItem }) {
         </div>
       )}
 
-      {/* Subtle Bottom Vignette & Instagram Reel Link */}
+      {/* Subtle Bottom Title & Link to Reel */}
       <div className="absolute inset-x-0 bottom-0 z-10 p-3 pt-8 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-center justify-between opacity-90 group-hover:opacity-100 transition-opacity">
         <span className="text-white text-[11px] font-medium tracking-wide truncate pr-2 drop-shadow-sm">
           {reel.title}
@@ -128,6 +128,27 @@ function ReelCard({ reel }: { reel: ReelItem }) {
 }
 
 export default function InstagramReels() {
+  const [reels, setReels] = useState<ReelItem[]>(INITIAL_REELS);
+
+  useEffect(() => {
+    // Dynamic fetch: checks for updated reels every time page loads
+    async function fetchLatestReels() {
+      try {
+        const res = await fetch("/api/reels");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.reels) && data.reels.length > 0) {
+            setReels(data.reels);
+          }
+        }
+      } catch (err) {
+        // Keeps initial fallback reels if network fails
+      }
+    }
+
+    fetchLatestReels();
+  }, []);
+
   return (
     <section className="w-full bg-[#fcfbfa] py-14 md:py-20 border-y border-[#ede8e1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,9 +174,9 @@ export default function InstagramReels() {
           </Link>
         </div>
 
-        {/* Video Reel Cards Row (Scrollable on mobile/tablet, flex wrap on large screens) */}
+        {/* Dynamic Video Reel Cards Row */}
         <div className="flex items-center gap-4 md:gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth">
-          {REELS.map((reel) => (
+          {reels.map((reel) => (
             <ReelCard key={reel.id} reel={reel} />
           ))}
         </div>
