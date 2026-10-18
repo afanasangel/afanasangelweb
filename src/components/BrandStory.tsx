@@ -26,17 +26,31 @@ export default function BrandStory() {
         </div>
         <div className="lg:col-span-7 flex flex-col items-start lg:pl-space-xl">
           <span className="font-label-caps-sm text-label-caps-sm uppercase tracking-widest text-primary block mb-space-xs">
-            THE ATELIER MANIFESTO
+            OUR STORY
           </span>
           <h2 className="font-headline-xl text-headline-xl text-on-surface mb-space-md leading-tight">
-            Where Ethereal Grace Meets Architectural Tailoring.
+            AFANA’S ANGEL
           </h2>
-          <p className="font-body-lg text-body-lg text-secondary mb-space-md">
-            Founded on the principle that luxury modest fashion should possess both the gravitas of Middle Eastern heritage and the crisp precision of global haute couture, Afana's Angel transforms ancestral textiles into modern icons.
-          </p>
-          <p className="font-body-md text-body-md text-secondary">
-            Every piece is designed within our private Downtown Dubai salon, woven from organic unadulterated silks, and rendered with custom 24k gold bullion needlework that requires weeks of focused artisanal concentration.
-          </p>
+          <div className="space-y-4 font-body-md text-secondary leading-relaxed">
+            <p>
+              AFANA’S Angel was born in 2020 from a childhood dream of bringing authentic abayas and original Pakistani suits from the UAE to India and the world.
+            </p>
+            <p>
+              With my husband’s love and support, I turned my dream into reality. What started as an online store has now grown into two stores and a family of over 10,000 happy customers.
+            </p>
+            <p>
+              Our promise has always been to provide original products with quality, trust, and love. Every step of this journey has been possible because of the wonderful people who believed in us and helped us grow.
+            </p>
+            <p>
+              From a childhood dream to a brand filled with love and gratitude, AFANA’S Angel will always be more than just a brand — it is my dream, my passion, and my heart.
+            </p>
+            <div className="pt-2">
+              <p className="font-medium text-on-surface italic">
+                With love,<br />
+                <span className="font-bold not-italic">Afana Shammaz ❤️</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
