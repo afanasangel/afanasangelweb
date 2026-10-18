@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import CategoryTiles from "@/components/CategoryTiles";
 import ArtfulEdit from "@/components/ArtfulEdit";
 import BrandStory from "@/components/BrandStory";
-import Perks from "@/components/Perks";
+import InstagramReels from "@/components/InstagramReels";
 import OurStores from "@/components/OurStores";
 import { getShopifyProducts, getShopifyCollections } from "@/lib/shopify";
 
@@ -20,7 +20,7 @@ export default async function Home() {
           <CategoryTiles />
           <ArtfulEdit initialProducts={shopifyProducts} initialCollections={liveCollections} />
           <BrandStory />
-          <Perks />
+          <InstagramReels />
           <OurStores />
         </div>
       </main>
