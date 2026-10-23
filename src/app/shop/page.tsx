@@ -61,13 +61,13 @@ export default async function ShopPage({
           {collectionTitle}
         </h1>
 
-        {/* Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-[10px] md:text-[11px] tracking-widest uppercase mb-8">
+        {/* Filters: Slide view on mobile, centered wrap on desktop */}
+        <div className="flex items-center sm:justify-center gap-3 md:gap-6 text-[10px] md:text-[11px] tracking-widest uppercase mb-8 overflow-x-auto no-scrollbar scroll-smooth w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 flex-nowrap sm:flex-wrap">
           {collectionTabs.map((tab, idx) => (
-            <div key={tab.label} className="flex items-center gap-3 md:gap-6">
+            <div key={tab.label} className="flex items-center gap-3 md:gap-6 flex-shrink-0">
               <Link
                 href={tab.href}
-                className={`transition-colors font-medium ${
+                className={`transition-colors font-medium whitespace-nowrap ${
                   tab.active ? "text-black border-b border-black pb-0.5 font-semibold" : "text-gray-500 hover:text-black"
                 }`}
               >

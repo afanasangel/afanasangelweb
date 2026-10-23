@@ -78,10 +78,13 @@ export default function ArtfulEdit({
             </h2>
           </div>
 
-          {/* Dynamic Filter Tabs from Shopify */}
-          <div className="flex flex-wrap gap-1.5 sm:gap-space-xs" id="productFilterNav">
+          {/* Dynamic Filter Tabs from Shopify: Scrollable slide view on mobile, wrap on desktop */}
+          <div
+            className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth w-full lg:w-auto pb-1 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 lg:flex-wrap flex-nowrap"
+            id="productFilterNav"
+          >
             <button
-              className={filterButtonClasses("all")}
+              className={`${filterButtonClasses("all")} flex-shrink-0 whitespace-nowrap cursor-pointer`}
               onClick={() => setActiveCollectionHandle("all")}
             >
               All Silhouettes
@@ -89,7 +92,7 @@ export default function ArtfulEdit({
             {collections.map((col) => (
               <button
                 key={col.id || col.handle}
-                className={filterButtonClasses(col.handle)}
+                className={`${filterButtonClasses(col.handle)} flex-shrink-0 whitespace-nowrap cursor-pointer`}
                 onClick={() => setActiveCollectionHandle(col.handle)}
               >
                 {col.title}
