@@ -59,12 +59,12 @@ export default function Footer() {
               QUICK LINKS
             </h4>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop">All Collections</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=budget-friendly-abaya">Budget Friendly Abaya</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=abaya">Abaya</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=premium-abaya">Premium Abaya</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=pakistani-suit">Pakistani Suit</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=premium-pakistani-suit">Premium Pakistani Suits</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?category=bridal-collections">Bridal Collections</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=budget-friendly-abaya">Budget Friendly Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=abaya">Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=premium-abaya">Premium Abaya</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=pakistani-suit">Pakistani Suit</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=premium-pakistani-suit">Premium Pakistani Suits</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=bridal-collections">Bridal Collections</Link>
           </div>
 
           {/* Column 3: CUSTOMER SERVICES */}
@@ -72,12 +72,8 @@ export default function Footer() {
             <h4 className="font-label-caps-sm text-sm uppercase tracking-widest text-black mb-3 font-medium">
               CUSTOMER SERVICES
             </h4>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">FAQs</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Order Tracking</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Store Locator</Link>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Contact Us</Link>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Return &amp; Exchange Policy</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Return &amp; Exchange Policy Boutique</Link>
           </div>
         </div>
         

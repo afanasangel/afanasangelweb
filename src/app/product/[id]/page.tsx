@@ -125,13 +125,19 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
              suggestedProducts.map((item: ShopifyProduct) => (
                <Link href={`/product/${item.handle}`} key={item.id} className="group relative block cursor-pointer">
                   <div className="relative w-full aspect-[3/4] bg-gray-200 mb-3 sm:mb-4 overflow-hidden rounded-xs">
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                    />
+                    {item.imageUrl ? (
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 text-xs uppercase tracking-wider">
+                        No Image
+                      </div>
+                    )}
                     {item.tags[0] && (
                       <span className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-[#e22d2d] text-white text-[9px] sm:text-[10px] tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 uppercase z-10">{item.tags[0]}</span>
                     )}

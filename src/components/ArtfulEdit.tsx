@@ -116,8 +116,16 @@ export default function ArtfulEdit({
               />
             ))
           ) : (
-            <div className="col-span-full text-center py-12 text-gray-500 tracking-widest uppercase text-sm">
-              No products found in this collection.
+            <div className="col-span-full text-center py-16 px-4 flex flex-col items-center justify-center">
+              <span className="font-label-caps-sm text-[11px] uppercase tracking-[0.25em] text-[#775a19] mb-2 font-semibold">
+                Haute Couture
+              </span>
+              <p className="font-headline-md text-xl md:text-2xl text-black tracking-[0.15em] uppercase font-light mb-3">
+                Coming Soon
+              </p>
+              <p className="text-gray-500 text-xs tracking-wider max-w-md">
+                Pieces for this collection are currently being crafted and will be available soon.
+              </p>
             </div>
           )}
         </div>

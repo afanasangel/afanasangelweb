@@ -36,20 +36,9 @@ const COLOR_HEX_MAP: Record<string, string> = {
   emerald: "#065f46",
 };
 
-const SIZE_GUIDE_DATA = [
-  { size: "XS", bustIn: "34", waistIn: "28", hipIn: "36", lengthIn: "52", bustCm: "86", waistCm: "71", hipCm: "91", lengthCm: "132" },
-  { size: "S",  bustIn: "36", waistIn: "30", hipIn: "38", lengthIn: "54", bustCm: "91", waistCm: "76", hipCm: "97", lengthCm: "137" },
-  { size: "M",  bustIn: "38", waistIn: "32", hipIn: "40", lengthIn: "56", bustCm: "97", waistCm: "81", hipCm: "102", lengthCm: "142" },
-  { size: "L",  bustIn: "40", waistIn: "35", hipIn: "43", lengthIn: "56", bustCm: "102", waistCm: "89", hipCm: "109", lengthCm: "142" },
-  { size: "XL", bustIn: "43", waistIn: "38", hipIn: "46", lengthIn: "58", bustCm: "109", waistCm: "97", hipCm: "117", lengthCm: "147" },
-  { size: "XXL",bustIn: "46", waistIn: "41", hipIn: "49", lengthIn: "58", bustCm: "117", waistCm: "104", hipCm: "124", lengthCm: "147" },
-];
-
 export default function AddToCartButton({ product }: AddToCartProps) {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
-  const [sizeUnit, setSizeUnit] = useState<"in" | "cm">("in");
 
   // Determine available options and normalize
   const options = useMemo(() => {
@@ -249,17 +238,6 @@ export default function AddToCartButton({ product }: AddToCartProps) {
             <span className="text-xs uppercase tracking-[0.18em] text-black font-semibold">
               SIZE: <span className="font-normal text-gray-700">{selectedOptions[sizeOption.name] || sizeOption.values[0]}</span>
             </span>
-            <button
-              type="button"
-              onClick={() => setIsSizeGuideOpen(true)}
-              className="text-[11px] uppercase tracking-wider text-gray-500 hover:text-black flex items-center gap-1.5 transition-colors underline underline-offset-4 cursor-pointer"
-            >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-                <path d="M21.3 8.7 8.7 21.3a2.1 2.1 0 0 1-3 0l-3-3a2.1 2.1 0 0 1 0-3L15.3 2.7a2.1 2.1 0 0 1 3 0l3 3a2.1 2.1 0 0 1 0 3Z" />
-                <path d="m14.5 3.5 2 2" /><path d="m11.5 6.5 2 2" /><path d="m8.5 9.5 2 2" /><path d="m5.5 12.5 2 2" />
-              </svg>
-              <span>SIZE GUIDE</span>
-            </button>
           </div>
 
           <div className="flex flex-wrap gap-2.5">
@@ -362,101 +340,6 @@ export default function AddToCartButton({ product }: AddToCartProps) {
       >
         {isAvailableForSale ? "BUY IT NOW" : "SOLD OUT"}
       </button>
-
-      {/* Size Guide Modal */}
-      {isSizeGuideOpen && (
-        <div
-          className="fixed inset-0 z-[120] bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-4"
-          onClick={() => setIsSizeGuideOpen(false)}
-        >
-          <div
-            className="bg-white max-w-xl w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
-              <div>
-                <h3 className="font-headline-sm text-lg tracking-[0.2em] uppercase text-black">SIZE GUIDE</h3>
-                <p className="text-[11px] text-gray-500 tracking-wider uppercase mt-1">Haute Couture & Abaya Measurements</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsSizeGuideOpen(false)}
-                className="text-gray-400 hover:text-black transition-colors p-1 cursor-pointer flex items-center justify-center"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Units Switcher */}
-            <div className="flex items-center justify-end gap-2 mb-4">
-              <span className="text-[11px] uppercase tracking-wider text-gray-500 font-medium">UNIT:</span>
-              <button
-                type="button"
-                onClick={() => setSizeUnit("in")}
-                className={`px-3 py-1 text-[11px] tracking-wider uppercase font-medium border transition-colors cursor-pointer ${
-                  sizeUnit === "in" ? "bg-black text-white border-black" : "bg-white text-gray-700 border-gray-300 hover:border-black"
-                }`}
-              >
-                INCHES
-              </button>
-              <button
-                type="button"
-                onClick={() => setSizeUnit("cm")}
-                className={`px-3 py-1 text-[11px] tracking-wider uppercase font-medium border transition-colors cursor-pointer ${
-                  sizeUnit === "cm" ? "bg-black text-white border-black" : "bg-white text-gray-700 border-gray-300 hover:border-black"
-                }`}
-              >
-                CM
-              </button>
-            </div>
-
-            {/* Measurements Table */}
-            <div className="overflow-x-auto mb-6">
-              <table className="w-full text-xs text-left tracking-wider">
-                <thead className="bg-gray-100 text-gray-800 uppercase font-semibold text-[11px]">
-                  <tr>
-                    <th className="p-3 border-b border-gray-200">SIZE</th>
-                    <th className="p-3 border-b border-gray-200">BUST</th>
-                    <th className="p-3 border-b border-gray-200">WAIST</th>
-                    <th className="p-3 border-b border-gray-200">HIPS</th>
-                    <th className="p-3 border-b border-gray-200">LENGTH</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {SIZE_GUIDE_DATA.map((row) => (
-                    <tr key={row.size} className="hover:bg-gray-50 transition-colors">
-                      <td className="p-3 font-semibold text-black">{row.size}</td>
-                      <td className="p-3 text-gray-600">{sizeUnit === "in" ? `${row.bustIn}"` : `${row.bustCm} cm`}</td>
-                      <td className="p-3 text-gray-600">{sizeUnit === "in" ? `${row.waistIn}"` : `${row.waistCm} cm`}</td>
-                      <td className="p-3 text-gray-600">{sizeUnit === "in" ? `${row.hipIn}"` : `${row.hipCm} cm`}</td>
-                      <td className="p-3 text-gray-600">{sizeUnit === "in" ? `${row.lengthIn}"` : `${row.lengthCm} cm`}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Fit Notes */}
-            <div className="bg-[#f9f9f9] border border-gray-200 p-4 text-xs text-gray-600 space-y-2 leading-relaxed">
-              <p className="font-semibold text-black uppercase tracking-wider text-[11px]">Fit & Styling Advice:</p>
-              <p>• <strong>Abayas:</strong> Designed for an elegant, modest drape. Select length according to your height (e.g. 54" for 5'2" - 5'4", 56" for 5'5" - 5'7").</p>
-              <p>• <strong>Suits & Tunics:</strong> Standard true-to-size couture tailoring. If between sizes, we recommend sizing up for layering.</p>
-            </div>
-
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setIsSizeGuideOpen(false)}
-                className="bg-black text-white px-6 py-2.5 uppercase tracking-widest text-xs font-semibold hover:bg-gray-800 transition-colors cursor-pointer"
-              >
-                CLOSE
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

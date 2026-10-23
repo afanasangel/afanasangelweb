@@ -151,6 +151,9 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
     const query = `
       query getCollectionProducts($handle: String!, $first: Int!) {
         collection(handle: $handle) {
+          id
+          title
+          handle
           products(first: $first) {
             edges {
               node {
@@ -224,11 +227,39 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
         }
       }
     `;
-    const data = await storefrontFetch<{ collection: { products: { edges: Array<{ node: any }> } } }>(query, { handle: collectionHandle, first: limit });
-    const nodes = data?.collection?.products?.edges?.map((e) => e.node) || [];
-    if (nodes.length > 0) {
-      return nodes.map(mapProductNode);
+
+    // Try primary handle
+    let data = await storefrontFetch<{ collection: { products: { edges: Array<{ node: any }> } } | null }>(query, {
+      handle: collectionHandle,
+      first: limit,
+    });
+    let nodes = data?.collection?.products?.edges?.map((e) => e.node) || [];
+
+    // If no products and handle has an alternative suffix (e.g. -1 or coords/co-ord-sets)
+    if (nodes.length === 0) {
+      const aliasMap: Record<string, string> = {
+        "premium-abaya": "premium-abaya-1",
+        "premium-pakistani-suit": "premium-pakistani-suits-1",
+        "premium-pakistani-suits": "premium-pakistani-suits-1",
+        "pakistani-suit": "pakistani-suits",
+        "coords": "co-ord-sets",
+        "coord-sets": "co-ord-sets",
+      };
+      const altHandle = aliasMap[collectionHandle] || (collectionHandle.endsWith("-1") ? collectionHandle.replace(/-1$/, "") : `${collectionHandle}-1`);
+      if (altHandle && altHandle !== collectionHandle) {
+        const altData = await storefrontFetch<{ collection: { products: { edges: Array<{ node: any }> } } | null }>(query, {
+          handle: altHandle,
+          first: limit,
+        });
+        const altNodes = altData?.collection?.products?.edges?.map((e) => e.node) || [];
+        if (altNodes.length > 0) {
+          nodes = altNodes;
+        }
+      }
     }
+
+    // Return only the products added to this collection (do not fallback to all products)
+    return nodes.map(mapProductNode);
   }
 
   // Fetch all products
@@ -315,7 +346,7 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
 /**
  * Fetch all collections from Shopify
  */
-export async function getShopifyCollections(limit = 20): Promise<ShopifyCollection[]> {
+export async function getShopifyCollections(limit = 30): Promise<ShopifyCollection[]> {
   const query = `
     query getCollections($first: Int!) {
       collections(first: $first) {
@@ -335,13 +366,65 @@ export async function getShopifyCollections(limit = 20): Promise<ShopifyCollecti
   `;
 
   const data = await storefrontFetch<{ collections: { edges: Array<{ node: any }> } }>(query, { first: limit });
-  return (data?.collections?.edges || []).map((e) => ({
+  const rawList = (data?.collections?.edges || []).map((e) => ({
     id: e.node.id,
     title: e.node.title,
     handle: e.node.handle,
     description: e.node.description,
     imageUrl: e.node.image?.url,
   }));
+
+  // Standard collection order & deduplication map
+  const standardCollections: Array<{ handle: string; title: string }> = [
+    { handle: "premium-abaya", title: "Premium Abaya" },
+    { handle: "abaya", title: "Abaya" },
+    { handle: "budget-friendly-abaya", title: "Budget Friendly Abaya" },
+    { handle: "premium-pakistani-suits", title: "Premium Pakistani Suits" },
+    { handle: "pakistani-suits", title: "Pakistani Suits" },
+    { handle: "budget-friendly-suits", title: "Budget Friendly Suits" },
+    { handle: "co-ord-sets", title: "Co-ord Sets" },
+  ];
+
+  // Map each standard collection to the best matching live Shopify collection ID
+  const result: ShopifyCollection[] = [];
+  const seenHandles = new Set<string>();
+
+  for (const std of standardCollections) {
+    const matched = rawList.find(
+      (c) =>
+        c.handle.toLowerCase() === std.handle.toLowerCase() ||
+        c.handle.toLowerCase() === `${std.handle.toLowerCase()}-1` ||
+        c.title.toLowerCase().replace(/[\s\-_]/g, "") === std.title.toLowerCase().replace(/[\s\-_]/g, "")
+    );
+    if (matched) {
+      result.push({
+        id: matched.id,
+        title: std.title,
+        handle: std.handle,
+        description: matched.description,
+        imageUrl: matched.imageUrl,
+      });
+      seenHandles.add(matched.handle.toLowerCase());
+      seenHandles.add(std.handle.toLowerCase());
+    }
+  }
+
+  // Include any other user-created live collections not in the standard list
+  for (const c of rawList) {
+    const baseHandle = c.handle.replace(/-1$/, "");
+    if (!seenHandles.has(c.handle.toLowerCase()) && !seenHandles.has(baseHandle.toLowerCase())) {
+      result.push({
+        id: c.id,
+        title: c.title,
+        handle: c.handle,
+        description: c.description,
+        imageUrl: c.imageUrl,
+      });
+      seenHandles.add(c.handle.toLowerCase());
+    }
+  }
+
+  return result;
 }
 
 /**

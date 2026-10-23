@@ -128,10 +128,22 @@ export default async function ShopPage({
             })}
           </div>
         ) : (
-          <div className="py-20 text-center flex flex-col items-center justify-center">
-            <p className="text-gray-500 uppercase tracking-widest text-xs mb-4">No products found in this collection.</p>
-            <Link href="/shop" className="text-xs uppercase tracking-widest underline font-medium hover:text-black">
-              View all products
+          <div className="py-24 md:py-32 text-center flex flex-col items-center justify-center max-w-lg mx-auto px-4">
+            <span className="font-label-caps-sm text-[11px] md:text-xs uppercase tracking-[0.3em] text-[#775a19] mb-3 block font-semibold">
+              Curated Haute Collection
+            </span>
+            <h2 className="font-headline-xl text-3xl md:text-4xl text-black uppercase tracking-[0.15em] mb-4 font-light">
+              Coming Soon
+            </h2>
+            <div className="w-12 h-[1px] bg-stone-300 mb-6"></div>
+            <p className="text-gray-500 text-xs md:text-sm tracking-wider leading-relaxed mb-8">
+              New exclusive pieces for <strong className="text-black font-medium">{collectionTitle}</strong> are currently in production and arriving soon to our Dubai boutiques.
+            </p>
+            <Link
+              href="/shop"
+              className="bg-black text-white px-8 py-3.5 text-xs font-medium tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors shadow-sm"
+            >
+              Explore All Collections
             </Link>
           </div>
         )}
