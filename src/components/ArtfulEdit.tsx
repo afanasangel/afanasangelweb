@@ -33,27 +33,31 @@ export default function ArtfulEdit({
 
   const allProducts = products;
 
+  // Helper to normalize collection handles for matching
+  const normalizeHandle = (h: string) =>
+    h.toLowerCase().replace(/-1$/, "").replace(/[\s\-_]/g, "");
+
   // Filter products based on selected collection tab
   const displayedProducts =
     activeCollectionHandle === "all"
       ? allProducts
       : allProducts.filter((p) => {
+          const targetNorm = normalizeHandle(activeCollectionHandle);
+
           // Check product.collections
-          const hasInCollections = p.collections?.some(
-            (c: { handle: string; title: string }) =>
-              c.handle.toLowerCase() === activeCollectionHandle.toLowerCase()
-          );
+          const hasInCollections = p.collections?.some((c: { handle: string; title: string }) => {
+            const colHandleNorm = normalizeHandle(c.handle);
+            const colTitleNorm = normalizeHandle(c.title);
+            return colHandleNorm === targetNorm || colTitleNorm === targetNorm;
+          });
           if (hasInCollections) return true;
 
-          // Also check title or tags as fallback
-          const handleTerms = activeCollectionHandle.toLowerCase().split("-");
-          const matchesTitle = handleTerms.some((t: string) =>
-            p.title.toLowerCase().includes(t)
-          );
-          const matchesTag = p.tags?.some((tag: string) =>
-            tag.toLowerCase().includes(activeCollectionHandle.toLowerCase())
-          );
-          return matchesTitle || matchesTag;
+          // Check tags
+          const matchesTag = p.tags?.some((tag: string) => {
+            const tagNorm = normalizeHandle(tag);
+            return tagNorm.includes(targetNorm) || targetNorm.includes(tagNorm);
+          });
+          return matchesTag;
         });
 
   const filterButtonClasses = (handle: string) =>
