@@ -30,20 +30,6 @@ const STORES: Store[] = [
     mapUrl: "https://maps.app.goo.gl/4Br6NzsU8kEqtmgk8?g_st=iw",
     imageUrl: "/store_india_real.jpg",
   },
-  {
-    id: "uae-dubai",
-    name: "Afana's Angel Dubai",
-    cityState: "Dubai, UAE",
-    address: "Angel & Codex, Al Khaleej - Zaa'beel St, Al Karama, Dubai, United Arab Emirates",
-    phone: "+971 50 123 4567",
-    phoneRaw: "+971501234567",
-    instagram: "@afanasangel",
-    instagramUrl: "https://www.instagram.com/afanasangel",
-    mapUrl: "https://maps.app.goo.gl/Fd7RzNWvBpZJ4v5r8?g_st=iw",
-    imageUrl: "/store_dubai_real.jpg",
-    hasWhatsApp: true,
-    whatsappUrl: "https://wa.me/971501234567",
-  },
 ];
 
 export default function OurStores() {
@@ -57,12 +43,12 @@ export default function OurStores() {
           </h2>
         </div>
 
-        {/* Stores Container: Horizontal snap scroll on mobile, 2-column grid on desktop */}
-        <div className="flex lg:grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none snap-x snap-mandatory">
+        {/* Stores Container */}
+        <div className="max-w-2xl">
           {STORES.map((store) => (
             <div
               key={store.id}
-              className="bg-white rounded-2xl border border-gray-200/80 shadow-xs hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col sm:flex-row items-stretch w-[84vw] max-w-[340px] sm:max-w-none sm:w-auto shrink-0 snap-center"
+              className="bg-white rounded-2xl border border-gray-200/80 shadow-xs hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col sm:flex-row items-stretch w-full"
             >
               {/* Store Image Container */}
               <div className="relative w-full sm:w-[220px] md:w-[260px] aspect-[4/3] sm:aspect-auto sm:min-h-[290px] shrink-0 bg-gray-100 overflow-hidden">

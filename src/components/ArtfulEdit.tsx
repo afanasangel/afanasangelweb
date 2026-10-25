@@ -61,43 +61,48 @@ export default function ArtfulEdit({
         });
 
   const filterButtonClasses = (handle: string) =>
-    `px-space-md py-space-xs font-label-caps-sm text-label-caps-sm uppercase tracking-wider transition-colors ${
+    `px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] sm:text-[11px] md:text-xs font-medium tracking-wider uppercase transition-all duration-300 shrink-0 cursor-pointer ${
       activeCollectionHandle === handle
-        ? "bg-on-surface text-on-primary"
-        : "bg-surface-container-lowest text-secondary hover:text-on-surface"
+        ? "bg-black text-white shadow-sm ring-1 ring-black"
+        : "bg-white text-neutral-600 hover:text-black hover:bg-neutral-50 border border-neutral-200/80 shadow-2xs"
     }`;
 
   return (
-    <section className="w-full bg-surface-container-low py-8 md:py-space-3xl" id="artful-edit">
+    <section className="w-full bg-surface-container-low py-10 md:py-16" id="artful-edit">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-gutter">
         {/* Section Header with Dynamic Collection Filter Pills */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 md:mb-space-2xl gap-3 md:gap-space-md">
-          <div>
-            <h2 className="font-headline-xl text-2xl sm:text-3xl md:text-headline-xl text-on-surface">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-5">
+          <div className="space-y-1">
+            <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.25em] uppercase text-primary block">
+              Curated Selection
+            </span>
+            <h2 className="font-headline-xl text-3xl sm:text-4xl text-on-surface tracking-tight">
               New Arrivals
             </h2>
           </div>
 
-          {/* Dynamic Filter Tabs from Shopify: Scrollable slide view on mobile, wrap on desktop */}
-          <div
-            className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth w-full lg:w-auto pb-1 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 lg:flex-wrap flex-nowrap"
-            id="productFilterNav"
-          >
-            <button
-              className={`${filterButtonClasses("all")} flex-shrink-0 whitespace-nowrap cursor-pointer`}
-              onClick={() => setActiveCollectionHandle("all")}
+          {/* Luxury Filter Pills: horizontal swipe on mobile with fade hint, wrapped neatly on desktop */}
+          <div className="relative w-full md:w-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div
+              className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1 md:flex-wrap"
+              id="productFilterNav"
             >
-              All Silhouettes
-            </button>
-            {collections.map((col) => (
               <button
-                key={col.id || col.handle}
-                className={`${filterButtonClasses(col.handle)} flex-shrink-0 whitespace-nowrap cursor-pointer`}
-                onClick={() => setActiveCollectionHandle(col.handle)}
+                className={filterButtonClasses("all")}
+                onClick={() => setActiveCollectionHandle("all")}
               >
-                {col.title}
+                All Silhouettes
               </button>
-            ))}
+              {collections.map((col) => (
+                <button
+                  key={col.id || col.handle}
+                  className={filterButtonClasses(col.handle)}
+                  onClick={() => setActiveCollectionHandle(col.handle)}
+                >
+                  {col.title}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

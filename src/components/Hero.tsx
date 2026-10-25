@@ -10,21 +10,21 @@ const slides = [
     image: "/hero-bridal-v2.jpg",
     category: "BRIDAL COLLECTION",
     title: "LUXURY",
-    href: "#artful-edit",
+    href: "/shop",
   },
   {
     id: 2,
     image: "/hero-abaya-v2.jpg",
     category: "MODEST ELEGANCE",
     title: "ABAYA",
-    href: "#artful-edit",
+    href: "/shop",
   },
   {
     id: 3,
     image: "/hero-kurtha-v2.jpg",
     category: "PAKISTANI SUIT",
     title: "PREMIUM KURTHA",
-    href: "#artful-edit",
+    href: "/shop",
   }
 ];
 
