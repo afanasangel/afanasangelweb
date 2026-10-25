@@ -7,7 +7,15 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Afana's Angel | Haute Couture Dubai",
-  description: "Immerse in timeless royal silhouettes crafted in hand-spun 24K gilded zari, unadulterated pure raw silks, and regal embellishments curated for UAE celebration.",
+  description: "Immerse in timeless royal silhouettes crafted in hand-spun 24K gilded zari, unadulterated pure raw silks, and regal embellishments curated for celebration.",
+  icons: {
+    icon: [
+      { url: "/logo.png" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
