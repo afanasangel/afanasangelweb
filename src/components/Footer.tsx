@@ -65,8 +65,8 @@ export default function Footer() {
             <h4 className="font-label-caps-sm text-sm uppercase tracking-widest text-black mb-3 font-medium">
               CUSTOMER SERVICES
             </h4>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Contact Us</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="#">Return &amp; Exchange Policy</Link>
+            <a className="font-body-sm text-gray-500 hover:text-black transition-colors" href="tel:+918590444448">Contact Us</a>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/return-exchange-policy">Return &amp; Exchange Policy</Link>
           </div>
         </div>
         
