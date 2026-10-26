@@ -8,6 +8,7 @@ const slides = [
   {
     id: 1,
     image: "/hero-bridal-v2.jpg",
+    mobileImage: "/hero-bridal-mobile.webp",
     category: "BRIDAL COLLECTION",
     title: "LUXURY",
     href: "/shop",
@@ -15,6 +16,7 @@ const slides = [
   {
     id: 2,
     image: "/hero-abaya-v2.jpg",
+    mobileImage: "/hero-abaya-mobile.webp",
     category: "MODEST ELEGANCE",
     title: "ABAYA",
     href: "/shop",
@@ -22,6 +24,7 @@ const slides = [
   {
     id: 3,
     image: "/hero-kurtha-v2.jpg",
+    mobileImage: "/hero-kurtha-mobile.webp",
     category: "PAKISTANI SUIT",
     title: "PREMIUM KURTHA",
     href: "/shop",
@@ -47,16 +50,33 @@ export default function Hero() {
             index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          <Image
-            className="w-full h-full object-cover object-center"
-            alt={slide.title}
-            src={slide.image}
-            fill
-            priority={index === 0}
-            fetchPriority={index === 0 ? "high" : "auto"}
-            quality={80}
-            sizes="100vw"
-          />
+          {/* Mobile responsive image (served under 768px screen width for instant LCP) */}
+          <div className="block md:hidden absolute inset-0">
+            <Image
+              className="w-full h-full object-cover object-center"
+              alt={slide.title}
+              src={slide.mobileImage}
+              fill
+              priority={index === 0}
+              fetchPriority={index === 0 ? "high" : "auto"}
+              quality={ index === 0 ? 80 : 75 }
+              sizes="(max-width: 768px) 100vw, 1px"
+            />
+          </div>
+
+          {/* Desktop high-resolution image */}
+          <div className="hidden md:block absolute inset-0">
+            <Image
+              className="w-full h-full object-cover object-center"
+              alt={slide.title}
+              src={slide.image}
+              fill
+              priority={index === 0}
+              fetchPriority={index === 0 ? "high" : "auto"}
+              quality={80}
+              sizes="100vw"
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
         </div>
       ))}
