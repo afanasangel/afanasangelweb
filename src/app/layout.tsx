@@ -5,9 +5,7 @@ import CartDrawer from "@/components/CartDrawer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://afanasangel.com");
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://afanasangel.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

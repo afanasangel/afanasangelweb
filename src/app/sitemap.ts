@@ -1,9 +1,7 @@
 import { MetadataRoute } from "next";
 import { getShopifyProducts, getShopifyCollections } from "@/lib/shopify";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://afanasangel.com");
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://afanasangel.com";
 
 export const revalidate = 3600; // Revalidate every hour
 
