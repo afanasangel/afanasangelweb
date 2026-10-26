@@ -6,6 +6,7 @@ import Link from "next/link";
 interface ReelItem {
   id: string;
   videoSrc: string;
+  poster?: string;
   instagramUrl: string;
   title: string;
 }
@@ -14,30 +15,35 @@ const INITIAL_REELS: ReelItem[] = [
   {
     id: "DYmXZfxo_M-",
     videoSrc: "/reels/DYmXZfxo_M-.mp4",
+    poster: "/reels/DYmXZfxo_M-.jpg",
     instagramUrl: "https://www.instagram.com/reel/DYmXZfxo_M-/",
     title: "Premium Pakistani Gown & Bridal Collection",
   },
   {
     id: "DT0JQgOiS8r",
     videoSrc: "/reels/DT0JQgOiS8r.mp4",
+    poster: "/reels/DT0JQgOiS8r.jpg",
     instagramUrl: "https://www.instagram.com/reel/DT0JQgOiS8r/",
     title: "Imported Luxury Abayas with Fine Handwork",
   },
   {
     id: "DZuTKHXOZeq",
     videoSrc: "/reels/DZuTKHXOZeq.mp4",
+    poster: "/reels/DZuTKHXOZeq.jpg",
     instagramUrl: "https://www.instagram.com/reel/DZuTKHXOZeq/",
     title: "Pakistani Suits Collection Part 2",
   },
   {
     id: "DV8lS2ACBjB",
     videoSrc: "/reels/DV8lS2ACBjB.mp4",
+    poster: "/reels/DV8lS2ACBjB.jpg",
     instagramUrl: "https://www.instagram.com/reel/DV8lS2ACBjB/",
     title: "In-Store Showcase | Kasaragod Store",
   },
   {
     id: "DYbqJ-aJZrm",
     videoSrc: "/reels/DYbqJ-aJZrm.mp4",
+    poster: "/reels/DYbqJ-aJZrm.jpg",
     instagramUrl: "https://www.instagram.com/reel/DYbqJ-aJZrm/",
     title: "Designer Pakistani Suits Maryam Trade Centre",
   },
@@ -59,7 +65,10 @@ function ReelCard({ reel }: { reel: ReelItem }) {
           if (entry.isIntersecting) {
             setIsInView(true);
             if (videoRef.current && isPlaying) {
-              videoRef.current.play().catch(() => {});
+              const playPromise = videoRef.current.play();
+              if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+              }
             }
           } else {
             if (videoRef.current) {
@@ -68,7 +77,7 @@ function ReelCard({ reel }: { reel: ReelItem }) {
           }
         });
       },
-      { threshold: 0.25 }
+      { rootMargin: "200px 0px" }
     );
 
     observer.observe(cardRef.current);
@@ -81,7 +90,10 @@ function ReelCard({ reel }: { reel: ReelItem }) {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play().catch(() => {});
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
       setIsPlaying(true);
     }
   };
@@ -97,15 +109,17 @@ function ReelCard({ reel }: { reel: ReelItem }) {
     <div
       ref={cardRef}
       onClick={togglePlay}
-      className="group relative flex-shrink-0 w-[68vw] max-w-[280px] sm:w-[260px] md:w-[280px] aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-black select-none border border-stone-200/50 snap-center"
+      className="group relative flex-shrink-0 w-[68vw] max-w-[280px] sm:w-[260px] md:w-[280px] aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-stone-900 select-none border border-stone-200/50 snap-center"
     >
       {/* Video Element */}
       <video
         ref={videoRef}
         src={isInView ? reel.videoSrc : undefined}
-        preload="none"
+        poster={reel.poster}
+        preload={isInView ? "metadata" : "none"}
         className="w-full h-full object-cover"
         playsInline
+        autoPlay
         loop
         muted={isMuted}
         onPlay={() => setIsPlaying(true)}

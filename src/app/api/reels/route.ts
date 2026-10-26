@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export interface DynamicReelItem {
   id: string;
   videoSrc: string;
+  poster?: string;
   instagramUrl: string;
   title: string;
   category?: string;
@@ -13,6 +14,7 @@ const DEFAULT_REELS: DynamicReelItem[] = [
   {
     id: "DYmXZfxo_M-",
     videoSrc: "/reels/DYmXZfxo_M-.mp4",
+    poster: "/reels/DYmXZfxo_M-.jpg",
     instagramUrl: "https://www.instagram.com/reel/DYmXZfxo_M-/",
     title: "Premium Pakistani Gown & Bridal Collection",
     category: "Pakistani Suits",
@@ -20,6 +22,7 @@ const DEFAULT_REELS: DynamicReelItem[] = [
   {
     id: "DT0JQgOiS8r",
     videoSrc: "/reels/DT0JQgOiS8r.mp4",
+    poster: "/reels/DT0JQgOiS8r.jpg",
     instagramUrl: "https://www.instagram.com/reel/DT0JQgOiS8r/",
     title: "Imported Luxury Abayas with Fine Handwork",
     category: "Abayas",
@@ -27,6 +30,7 @@ const DEFAULT_REELS: DynamicReelItem[] = [
   {
     id: "DZuTKHXOZeq",
     videoSrc: "/reels/DZuTKHXOZeq.mp4",
+    poster: "/reels/DZuTKHXOZeq.jpg",
     instagramUrl: "https://www.instagram.com/reel/DZuTKHXOZeq/",
     title: "Pakistani Suits Collection Part 2",
     category: "New Arrivals",
@@ -34,6 +38,7 @@ const DEFAULT_REELS: DynamicReelItem[] = [
   {
     id: "DV8lS2ACBjB",
     videoSrc: "/reels/DV8lS2ACBjB.mp4",
+    poster: "/reels/DV8lS2ACBjB.jpg",
     instagramUrl: "https://www.instagram.com/reel/DV8lS2ACBjB/",
     title: "In-Store Showcase | Kasaragod Store",
     category: "Store Visit",
@@ -41,6 +46,7 @@ const DEFAULT_REELS: DynamicReelItem[] = [
   {
     id: "DYbqJ-aJZrm",
     videoSrc: "/reels/DYbqJ-aJZrm.mp4",
+    poster: "/reels/DYbqJ-aJZrm.jpg",
     instagramUrl: "https://www.instagram.com/reel/DYbqJ-aJZrm/",
     title: "Designer Pakistani Suits Maryam Trade Centre",
     category: "Pakistani Suits",
