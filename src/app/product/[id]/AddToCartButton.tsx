@@ -371,7 +371,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
         {/* Dynamic Quantity Limit Advice */}
         {maxStock !== null && quantity >= maxStock && (
           <p className="text-[11px] text-amber-700 font-medium tracking-wide">
-            Max available stock reached ({maxStock} {maxStock === 1 ? "piece" : "pieces"} remaining in Shopify store)
+            Max available stock reached
           </p>
         )}
       </div>
