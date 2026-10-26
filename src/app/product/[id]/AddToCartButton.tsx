@@ -1,7 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { ShopifyProductOption, ShopifyVariant } from "@/lib/shopify";
 
 export interface AddToCartProps {
@@ -62,7 +62,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
     ];
   }, [product.options]);
 
-  const variants = useMemo(() => {
+  const variants: ShopifyVariant[] = useMemo(() => {
     if (product.variants && product.variants.length > 0) {
       return product.variants;
     }
@@ -75,6 +75,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
       priceNumeric: product.priceNumeric,
       compareAtPrice: product.originalPrice || null,
       availableForSale: true,
+      quantityAvailable: null,
       selectedOptions: [{ name: "Size", value: sz }],
     }));
   }, [product.variants, product.id, product.sku, product.price, product.priceNumeric, product.originalPrice]);
@@ -175,9 +176,73 @@ export default function AddToCartButton({ product }: AddToCartProps) {
     window.location.href = `https://${domain}/cart/${rawId}:${quantity}`;
   };
 
+  // Live inventory fetching from Shopify
+  const [liveInventory, setLiveInventory] = useState<{
+    quantity: number | null;
+    available: boolean;
+    loading: boolean;
+  }>({
+    quantity: typeof currentVariant?.quantityAvailable === "number" ? currentVariant.quantityAvailable : null,
+    available: isAvailableForSale,
+    loading: false,
+  });
+
+  // Fetch live inventory updates from Shopify API
+  useEffect(() => {
+    const handle = product.handle || product.id;
+    const variantId = currentVariant?.id;
+    if (!handle) return;
+
+    let isMounted = true;
+    const fetchInventory = async () => {
+      try {
+        const queryParams = new URLSearchParams({ handle });
+        if (variantId) {
+          queryParams.set("variantId", variantId);
+        }
+        const res = await fetch(`/api/inventory?${queryParams.toString()}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (isMounted && data) {
+          setLiveInventory({
+            quantity: typeof data.quantityAvailable === "number" ? data.quantityAvailable : null,
+            available: typeof data.availableForSale === "boolean" ? data.availableForSale : isAvailableForSale,
+            loading: false,
+          });
+        }
+      } catch {
+        // Retain fallback
+      }
+    };
+
+    fetchInventory();
+    return () => {
+      isMounted = false;
+    };
+  }, [product.handle, product.id, currentVariant?.id, isAvailableForSale]);
+
+  const effectiveAvailable = liveInventory.available && isAvailableForSale;
+  const maxStock = typeof liveInventory.quantity === "number" && liveInventory.quantity > 0 ? liveInventory.quantity : null;
+  const isLowStock =
+    effectiveAvailable &&
+    typeof liveInventory.quantity === "number" &&
+    liveInventory.quantity > 0 &&
+    liveInventory.quantity <= 5;
+
   // Separate Size option vs other options
   const sizeOption = options.find((opt) => opt.name.toLowerCase().includes("size"));
   const nonSizeOptions = options.filter((opt) => !opt.name.toLowerCase().includes("size"));
+
+  const handleIncreaseQuantity = () => {
+    if (maxStock !== null && quantity >= maxStock) {
+      return;
+    }
+    setQuantity((q) => q + 1);
+  };
+
+  const handleDecreaseQuantity = () => {
+    setQuantity((q) => Math.max(1, q - 1));
+  };
 
   return (
     <>
@@ -207,7 +272,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
                     type="button"
                     onClick={() => handleOptionChange(opt.name, val)}
                     className={`flex items-center gap-2 px-3.5 py-2.5 border text-xs tracking-wider uppercase transition-all cursor-pointer ${
-                      isSelected
+                    isSelected
                         ? "border-black bg-black text-white font-semibold shadow-sm"
                         : isAvailable
                         ? "border-gray-300 bg-white text-gray-800 hover:border-black"
@@ -273,22 +338,41 @@ export default function AddToCartButton({ product }: AddToCartProps) {
         </div>
       )}
 
-      {/* Stock Availability Indicator */}
-      <div className="mb-6 flex items-center gap-2">
-        {isAvailableForSale ? (
-          <>
-            <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
-            <span className="text-[11px] tracking-widest uppercase text-emerald-800 font-medium">
-              IN STOCK • READY TO DISPATCH
-            </span>
-          </>
-        ) : (
-          <>
-            <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-            <span className="text-[11px] tracking-widest uppercase text-red-600 font-medium">
-              OUT OF STOCK FOR THIS SELECTION
-            </span>
-          </>
+      {/* Stock Availability Indicator with Live Tracking */}
+      <div className="mb-6 flex flex-col gap-1.5">
+        <div className="flex items-center gap-2">
+          {effectiveAvailable ? (
+            isLowStock ? (
+              <>
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block animate-ping"></span>
+                <span className="text-[11px] tracking-widest uppercase text-amber-700 font-semibold flex items-center gap-1.5">
+                  <span>ONLY {liveInventory.quantity} {liveInventory.quantity === 1 ? "PIECE" : "PIECES"} LEFT IN STOCK</span>
+                  <span className="text-amber-600 font-normal">• ORDER SOON</span>
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
+                <span className="text-[11px] tracking-widest uppercase text-emerald-800 font-medium">
+                  IN STOCK • READY TO DISPATCH
+                </span>
+              </>
+            )
+          ) : (
+            <>
+              <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+              <span className="text-[11px] tracking-widest uppercase text-red-600 font-medium">
+                OUT OF STOCK FOR THIS SELECTION
+              </span>
+            </>
+          )}
+        </div>
+
+        {/* Dynamic Quantity Limit Advice */}
+        {maxStock !== null && quantity >= maxStock && (
+          <p className="text-[11px] text-amber-700 font-medium tracking-wide">
+            Max available stock reached ({maxStock} {maxStock === 1 ? "piece" : "pieces"} remaining in Shopify store)
+          </p>
         )}
       </div>
 
@@ -296,18 +380,20 @@ export default function AddToCartButton({ product }: AddToCartProps) {
       <div className="flex items-center border border-gray-300 w-32 mb-8 bg-transparent">
         <button
           type="button"
-          onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          disabled={!isAvailableForSale}
+          onClick={handleDecreaseQuantity}
+          disabled={!isAvailableForSale || quantity <= 1}
           className="px-4 py-3 text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          title="Decrease quantity"
         >
           -
         </button>
         <span className="flex-1 text-center font-medium text-sm text-black">{quantity}</span>
         <button
           type="button"
-          onClick={() => setQuantity(quantity + 1)}
-          disabled={!isAvailableForSale}
+          onClick={handleIncreaseQuantity}
+          disabled={!isAvailableForSale || (maxStock !== null && quantity >= maxStock)}
           className="px-4 py-3 text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          title={maxStock !== null && quantity >= maxStock ? `Only ${maxStock} pieces in stock` : "Increase quantity"}
         >
           +
         </button>
@@ -324,7 +410,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
             : "bg-gray-200 border border-gray-300 text-gray-400 cursor-not-allowed"
         }`}
       >
-        {isAvailableForSale ? "ADD TO CART" : "OUT OF STOCK"}
+        {isAvailableForSale ? (quantity > 1 ? `ADD ${quantity} PIECES TO CART` : "ADD TO CART") : "OUT OF STOCK"}
       </button>
 
       {/* Buy It Now Button */}
@@ -338,7 +424,7 @@ export default function AddToCartButton({ product }: AddToCartProps) {
             : "bg-gray-300 text-gray-400 cursor-not-allowed"
         }`}
       >
-        {isAvailableForSale ? "BUY IT NOW" : "SOLD OUT"}
+        {isAvailableForSale ? (quantity > 1 ? `BUY ${quantity} PIECES NOW` : "BUY IT NOW") : "SOLD OUT"}
       </button>
     </>
   );
