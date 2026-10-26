@@ -40,6 +40,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
     touchStartX.current = null;
   };
 
+  // Preload next and prev images into browser cache
   return (
     <div className="w-full">
       {/* Mobile view (< lg) */}
@@ -49,16 +50,25 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {currentImage ? (
-            <Image
-              src={currentImage}
-              alt={`${title} image ${activeImageIndex + 1}`}
-              fill
-              className="object-cover transition-opacity duration-300"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 50vw"
-              priority
-            />
-          ) : null}
+          {/* Stacked pre-rendered images for zero-lag instant switching */}
+          {displayImages.map((img, idx) => (
+            <div
+              key={`${img}-${idx}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-200 ease-out ${
+                idx === activeImageIndex ? "opacity-100 z-1 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
+              }`}
+            >
+              <Image
+                src={img}
+                alt={`${title} image ${idx + 1}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 50vw"
+                priority={idx === 0 || idx === 1}
+                loading={idx <= 2 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
 
           {/* Left / Right arrows */}
           {displayImages.length > 1 && (
@@ -66,7 +76,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-black shadow-md hover:bg-white transition-all cursor-pointer z-10"
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-black shadow-md hover:bg-white active:scale-95 transition-all cursor-pointer z-10"
                 aria-label="Previous image"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -76,7 +86,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-black shadow-md hover:bg-white transition-all cursor-pointer z-10"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-black shadow-md hover:bg-white active:scale-95 transition-all cursor-pointer z-10"
                 aria-label="Next image"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -85,33 +95,36 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               </button>
 
               {/* Image Counter Badge */}
-              <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[10px] tracking-widest px-2.5 py-1 uppercase rounded-sm z-10">
+              <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] tracking-widest px-2.5 py-1 uppercase rounded-full font-medium z-10">
                 {activeImageIndex + 1} / {displayImages.length}
               </div>
             </>
           )}
         </div>
 
-        {/* Mobile Thumbnail Row */}
+        {/* Mobile Thumbnail Row with Instant Switch */}
         {displayImages.length > 1 && (
-          <div className="flex gap-2.5 overflow-x-auto py-3 px-1 scrollbar-none">
+          <div className="flex gap-2 overflow-x-auto py-2.5 px-1 scrollbar-none">
             {displayImages.map((img, idx) => (
               <button
-                key={`${img}-${idx}`}
+                key={`thumb-${img}-${idx}`}
                 type="button"
                 onClick={() => setActiveImageIndex(idx)}
-                className={`relative w-16 aspect-[3/4] flex-shrink-0 bg-gray-200 border-2 transition-all cursor-pointer overflow-hidden ${
+                className={`relative w-14 aspect-[3/4] flex-shrink-0 bg-gray-200 border-2 transition-all cursor-pointer overflow-hidden rounded-xs ${
                   activeImageIndex === idx
-                    ? "border-black ring-1 ring-black scale-[1.03]"
-                    : "border-transparent opacity-60 hover:opacity-100"
+                    ? "border-black ring-1 ring-black scale-[1.02] opacity-100"
+                    : "border-transparent opacity-60 hover:opacity-90"
                 }`}
+                aria-label={`Select photo ${idx + 1}`}
               >
                 <Image
                   src={img}
-                  alt={`${title} thumb ${idx + 1}`}
+                  alt={`${title} thumbnail ${idx + 1}`}
                   fill
                   className="object-cover"
-                  sizes="64px"
+                  sizes="56px"
+                  loading="eager"
+                  priority={idx < 4}
                 />
               </button>
             ))}
