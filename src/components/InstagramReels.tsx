@@ -48,13 +48,40 @@ function ReelCard({ reel }: { reel: ReelItem }) {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);
 
+  const [isInView, setIsInView] = useState<boolean>(false);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            if (videoRef.current && isPlaying) {
+              videoRef.current.play().catch(() => {});
+            }
+          } else {
+            if (videoRef.current) {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [isPlaying]);
+
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play();
+      videoRef.current.play().catch(() => {});
       setIsPlaying(true);
     }
   };
@@ -68,16 +95,17 @@ function ReelCard({ reel }: { reel: ReelItem }) {
 
   return (
     <div
+      ref={cardRef}
       onClick={togglePlay}
       className="group relative flex-shrink-0 w-[68vw] max-w-[280px] sm:w-[260px] md:w-[280px] aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-black select-none border border-stone-200/50 snap-center"
     >
       {/* Video Element */}
       <video
         ref={videoRef}
-        src={reel.videoSrc}
+        src={isInView ? reel.videoSrc : undefined}
+        preload="none"
         className="w-full h-full object-cover"
         playsInline
-        autoPlay
         loop
         muted={isMuted}
         onPlay={() => setIsPlaying(true)}

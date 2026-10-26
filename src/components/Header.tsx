@@ -70,11 +70,16 @@ export default function Header() {
             {/* Left: Hamburger Menu */}
             <div className="flex items-center justify-start">
               <button
-                className={`${textColor} ${hoverTextColor} transition-colors`}
+                className={`${textColor} ${hoverTextColor} transition-colors p-1`}
                 type="button"
+                aria-label="Open menu"
                 onClick={() => setIsMenuOpen(true)}
               >
-                <span className="material-symbols-outlined text-2xl md:text-3xl">menu</span>
+                <svg className="w-6 h-6 md:w-7 md:h-7 stroke-current stroke-[1.75]" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
               </button>
             </div>
             
@@ -93,14 +98,15 @@ export default function Header() {
             </div>
 
             {/* Right: Icons */}
-            <div className={`flex items-center justify-end gap-5 ${textColor}`}>
-              <Link href="#" className={`${hoverTextColor} transition-colors flex items-center`}>
-                <span className="material-symbols-outlined text-[28px] font-light">person</span>
-              </Link>
-              <button onClick={openCart} type="button" className={`${hoverTextColor} transition-colors flex items-center relative`}>
-                <span className="material-symbols-outlined text-[28px] font-light">local_mall</span>
+            <div className={`flex items-center justify-end ${textColor}`}>
+              <button onClick={openCart} type="button" aria-label="Shopping bag" className={`${hoverTextColor} transition-colors flex items-center relative p-1`}>
+                <svg className="w-6 h-6 md:w-7 md:h-7 stroke-current stroke-[1.75]" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
                 {totalItems > 0 && (
-                  <span className={`absolute -top-1 -right-2 ${isTransparent ? 'bg-white text-black' : 'bg-black text-white'} text-[10px] w-4 h-4 rounded-full flex items-center justify-center`}>
+                  <span className={`absolute -top-1 -right-2 ${isTransparent ? 'bg-white text-black' : 'bg-black text-white'} text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold`}>
                     {totalItems}
                   </span>
                 )}
@@ -115,8 +121,11 @@ export default function Header() {
       <div className={`fixed top-0 left-0 h-full w-[300px] bg-white z-50 transform transition-transform duration-300 flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-4 flex justify-between items-center border-b border-gray-100">
           <span className="text-lg font-medium tracking-widest uppercase">Menu</span>
-          <button onClick={() => setIsMenuOpen(false)} className="text-gray-500 hover:text-black">
-            <span className="material-symbols-outlined text-2xl">close</span>
+          <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="text-gray-500 hover:text-black p-1">
+            <svg className="w-6 h-6 stroke-current stroke-2" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
         <nav className="flex flex-col py-6 px-6 gap-6 overflow-y-auto">

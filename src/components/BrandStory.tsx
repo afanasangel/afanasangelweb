@@ -12,7 +12,6 @@ export default function BrandStory() {
               alt="Afana and Shammaz - Founders of AFANA'S Angel"
               src="/afana-shammaz.jpg"
               fill
-              priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>

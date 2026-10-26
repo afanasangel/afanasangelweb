@@ -40,8 +40,11 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#f3f3f3]">
           <h2 className="text-xl tracking-[0.2em] font-medium text-black uppercase">Cart</h2>
-          <button onClick={closeCart} className="text-gray-500 hover:text-black">
-            <span className="material-symbols-outlined font-light">close</span>
+          <button onClick={closeCart} aria-label="Close cart" className="text-gray-500 hover:text-black p-1">
+            <svg className="w-6 h-6 stroke-current stroke-2" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
 
