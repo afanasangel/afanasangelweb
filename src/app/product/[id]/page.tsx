@@ -1,10 +1,59 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import AddToCartButton from "./AddToCartButton";
 import ProductGallery from "./ProductGallery";
 import ProductTabs from "./ProductTabs";
 import { getShopifyProductByHandle, getShopifyProducts, ShopifyProduct } from "@/lib/shopify";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const product = await getShopifyProductByHandle(resolvedParams.id);
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+    };
+  }
+
+  const cleanDesc =
+    product.description?.replace(/<[^>]*>?/gm, "").slice(0, 160) ||
+    `Explore ${product.title} from AFANA'S ANGEL. Timeless elegance crafted with luxurious materials.`;
+
+  return {
+    title: product.title,
+    description: cleanDesc,
+    alternates: {
+      canonical: `/product/${product.handle}`,
+    },
+    openGraph: {
+      title: `${product.title} | AFANA'S ANGEL`,
+      description: cleanDesc,
+      url: `/product/${product.handle}`,
+      images: product.imageUrl
+        ? [
+            {
+              url: product.imageUrl,
+              width: 800,
+              height: 1200,
+              alt: product.title,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.title} | AFANA'S ANGEL`,
+      description: cleanDesc,
+      images: product.imageUrl ? [product.imageUrl] : [],
+    },
+  };
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -41,10 +90,41 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     .filter((p: ShopifyProduct) => p.handle !== resolvedParams.id && p.id !== product.title)
     .slice(0, 4);
   
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    image: product.images,
+    description: product.description || `AFANA'S ANGEL ${product.title}`,
+    sku: product.sku,
+    brand: {
+      "@type": "Brand",
+      name: "AFANA'S ANGEL",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://afanasangel.com/product/${shopifyProduct.handle}`,
+      priceCurrency: "INR",
+      price: product.priceNumeric,
+      availability: shopifyProduct.availableForSale
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "AFANA'S ANGEL",
+      },
+    },
+  };
+
   const isSingleImage = product.images.length <= 1;
 
   return (
     <div className="min-h-screen bg-[#f3f3f3] pt-0 lg:pt-6">
+      {/* Product JSON-LD Schema for Google Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb / Top Nav */}
       <div className="max-w-[1920px] mx-auto pb-16 lg:pb-24 bg-[#f3f3f3]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">

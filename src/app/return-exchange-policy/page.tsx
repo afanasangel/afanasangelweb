@@ -2,8 +2,16 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Return & Exchange Policy | AFANA'S Angel",
-  description: "Read AFANA'S Angel return and exchange policy. Full details on our mandatory unboxing video, exchange window, and claims process.",
+  title: "Return & Exchange Policy",
+  description: "Read AFANA'S ANGEL return and exchange policy. Full details on our unboxing guidelines, exchange window, and claims process.",
+  alternates: {
+    canonical: "/return-exchange-policy",
+  },
+  openGraph: {
+    title: "Return & Exchange Policy | AFANA'S ANGEL",
+    description: "Read AFANA'S ANGEL return and exchange policy details and customer care guidelines.",
+    url: "/return-exchange-policy",
+  },
 };
 
 export default function ReturnPolicyPage() {

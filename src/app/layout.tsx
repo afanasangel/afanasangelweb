@@ -5,9 +5,76 @@ import CartDrawer from "@/components/CartDrawer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://afanasangel.com");
+
 export const metadata: Metadata = {
-  title: "Afana's Angel | Haute Couture Dubai",
-  description: "Immerse in timeless royal silhouettes crafted in hand-spun 24K gilded zari, unadulterated pure raw silks, and regal embellishments curated for celebration.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "AFANA'S ANGEL | Haute Couture & Luxury Abayas",
+    template: "%s | AFANA'S ANGEL",
+  },
+  description:
+    "Discover bespoke couture abayas, luxury Pakistani suits, and handcrafted modest wear crafted with timeless elegance, premium fabrics, and royal embellishments.",
+  keywords: [
+    "Afana's Angel",
+    "Afanas Angel",
+    "Luxury Abayas",
+    "Premium Abayas",
+    "Pakistani Suits",
+    "Modest Fashion",
+    "Haute Couture Dubai",
+    "Kasaragod Boutique",
+    "Co-ord Sets",
+    "Designer Abayas",
+  ],
+  authors: [{ name: "AFANA'S ANGEL", url: SITE_URL }],
+  creator: "AFANA'S ANGEL",
+  publisher: "AFANA'S ANGEL",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: "AFANA'S ANGEL",
+    title: "AFANA'S ANGEL | Haute Couture & Luxury Abayas",
+    description:
+      "Discover bespoke couture abayas, luxury Pakistani suits, and handcrafted modest wear crafted with timeless elegance and premium fabrics.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "AFANA'S ANGEL Haute Couture",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AFANA'S ANGEL | Haute Couture & Luxury Abayas",
+    description:
+      "Discover bespoke couture abayas, luxury Pakistani suits, and handcrafted modest wear crafted with timeless elegance and premium fabrics.",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/logo.png" },
@@ -26,9 +93,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    name: "AFANA'S ANGEL",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/logo.png`,
+    description:
+      "Haute couture modest fashion, luxury designer abayas, and Pakistani suits crafted with timeless royal elegance.",
+    telephone: "+91 85904 44448",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Ground Floor, Maryam Trade Centre, Old Bus Stand",
+      addressLocality: "Kasaragod",
+      addressRegion: "Kerala",
+      postalCode: "671121",
+      addressCountry: "IN",
+    },
+    sameAs: [
+      "https://www.instagram.com/afanasangel",
+      "https://www.facebook.com/share/1D7XSiyox2/?mibextid=wwXIfr",
+    ],
+    priceRange: "₹₹₹",
+  };
+
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

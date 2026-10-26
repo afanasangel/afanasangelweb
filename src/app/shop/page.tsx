@@ -1,6 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getShopifyProducts, getShopifyCollections } from "@/lib/shopify";
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<{ collection?: string }>;
+}): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams;
+  const currentCollection = resolvedSearchParams?.collection;
+
+  if (!currentCollection) {
+    return {
+      title: "Shop All Collections",
+      description: "Explore AFANA'S ANGEL luxury collection of couture abayas, Pakistani suits, and modest ready-to-wear ensembles.",
+      alternates: {
+        canonical: "/shop",
+      },
+    };
+  }
+
+  const collections = await getShopifyCollections(30);
+  const matched = collections.find((c) => c.handle.toLowerCase() === currentCollection.toLowerCase());
+  const title = matched?.title || currentCollection.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+  return {
+    title: `${title} Collection`,
+    description: matched?.description || `Shop the luxury ${title} collection from AFANA'S ANGEL. Timeless royal elegance and bespoke craftsmanship.`,
+    alternates: {
+      canonical: `/shop?collection=${currentCollection}`,
+    },
+    openGraph: {
+      title: `${title} Collection | AFANA'S ANGEL`,
+      description: matched?.description || `Shop the luxury ${title} collection from AFANA'S ANGEL.`,
+    },
+  };
+}
 
 export default async function ShopPage({
   searchParams,

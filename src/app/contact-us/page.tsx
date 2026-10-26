@@ -3,8 +3,16 @@ import Link from "next/link";
 import OurStores from "@/components/OurStores";
 
 export const metadata: Metadata = {
-  title: "Contact Us & Our Stores | AFANA'S Angel",
-  description: "Visit AFANA'S Angel store in Kasaragod, Kerala or contact us for inquiries, directions, and appointments.",
+  title: "Contact Us & Our Stores",
+  description: "Visit AFANA'S ANGEL flagship boutique in Kasaragod, Kerala or contact us for bespoke appointments, bridal consultations, and customer care.",
+  alternates: {
+    canonical: "/contact-us",
+  },
+  openGraph: {
+    title: "Contact Us & Our Stores | AFANA'S ANGEL",
+    description: "Visit AFANA'S ANGEL boutique in Kasaragod, Kerala or contact our team for bespoke styling.",
+    url: "/contact-us",
+  },
 };
 
 export default function ContactUsPage() {
