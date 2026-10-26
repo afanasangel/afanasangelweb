@@ -119,16 +119,27 @@ function ReelCard({ reel }: { reel: ReelItem }) {
         aria-label={isMuted ? "Unmute video" : "Mute video"}
         className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white/90 hover:bg-black/75 transition-colors"
       >
-        <span className="material-symbols-outlined text-[18px]">
-          {isMuted ? "volume_off" : "volume_up"}
-        </span>
+        {isMuted ? (
+          <svg className="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23" />
+            <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6" />
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+          </svg>
+        ) : (
+          <svg className="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+        )}
       </button>
 
       {/* Play/Pause Center Indicator */}
       {!isPlaying && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/25 backdrop-blur-[1px]">
           <div className="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white shadow-lg transition-transform transform scale-100">
-            <span className="material-symbols-outlined text-3xl ml-0.5">play_arrow</span>
+            <svg className="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
           </div>
         </div>
       )}
@@ -198,7 +209,10 @@ export default function InstagramReels() {
             className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-900 hover:text-amber-700 transition-colors shrink-0"
           >
             <span>View All</span>
-            <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            <svg className="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </Link>
         </div>
 

@@ -178,7 +178,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             
             <div className="mt-8 flex items-center gap-2 text-gray-500">
               <span className="text-[10px] tracking-[0.2em] uppercase">SHARE</span>
-              <span className="material-symbols-outlined text-sm">share</span>
+              <svg className="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
             </div>
 
             {/* Mobile-only Description & Details: Shown after Images, Price, Size, and Buttons */}

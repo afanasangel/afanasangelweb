@@ -84,9 +84,9 @@ export default function Hero() {
         <span className="font-label-caps-sm text-[10px] uppercase tracking-widest">
           SCROLL NOW
         </span>
-        <span className="material-symbols-outlined animate-bounce text-xl">
-          keyboard_arrow_down
-        </span>
+        <svg className="w-5 h-5 animate-bounce stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </div>
 
       {/* Slider Controls (Right) */}

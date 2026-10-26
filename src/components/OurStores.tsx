@@ -74,9 +74,10 @@ export default function OurStores() {
                   <div className="space-y-2.5 text-xs text-gray-700">
                     {/* Address with Map pin icon */}
                     <div className="flex items-start gap-2.5">
-                      <span className="material-symbols-outlined text-[17px] text-gray-500 shrink-0 mt-0.5">
-                        location_on
-                      </span>
+                      <svg className="w-4 h-4 text-gray-500 shrink-0 mt-0.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
                       <span className="leading-relaxed">
                         {store.address}
                       </span>
@@ -84,9 +85,9 @@ export default function OurStores() {
 
                     {/* Phone with call icon */}
                     <div className="flex items-center gap-2.5">
-                      <span className="material-symbols-outlined text-[17px] text-gray-500 shrink-0">
-                        call
-                      </span>
+                      <svg className="w-4 h-4 text-gray-500 shrink-0 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
                       <a
                         href={`tel:${store.phoneRaw}`}
                         className="hover:text-black transition-colors font-medium"
@@ -131,7 +132,9 @@ export default function OurStores() {
                     rel="noopener noreferrer"
                     className="w-full bg-[#4a2417] hover:bg-[#381a10] text-white py-2.5 px-4 rounded-xl text-xs font-semibold tracking-wider flex items-center justify-center gap-2 transition-colors shadow-xs"
                   >
-                    <span className="material-symbols-outlined text-base">near_me</span>
+                    <svg className="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                    </svg>
                     <span>Get directions</span>
                   </a>
 
@@ -141,7 +144,9 @@ export default function OurStores() {
                       href={`tel:${store.phoneRaw}`}
                       className="flex-1 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 py-2 px-3 rounded-xl text-xs font-semibold tracking-wider flex items-center justify-center gap-1.5 transition-colors"
                     >
-                      <span className="material-symbols-outlined text-base text-gray-600">call</span>
+                      <svg className="w-4 h-4 text-gray-600 stroke-current stroke-2" fill="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
                       <span>Call store</span>
                     </a>
 

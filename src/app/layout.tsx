@@ -138,12 +138,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body suppressHydrationWarning className="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased">
         <CartProvider>
