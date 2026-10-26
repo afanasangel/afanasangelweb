@@ -241,7 +241,7 @@ export async function getShopifyProducts(collectionHandle?: string, limit = 50):
       const aliasMap: Record<string, string> = {
         "premium-abaya": "premium-abaya-1",
         "abaya": "abaya-1",
-        "premium-pakistani-suit": "premium-pakistani-suits-1",
+        "premium-pakistani-suit": "premium-pakistani-suits",
         "premium-pakistani-suits": "premium-pakistani-suits-1",
         "pakistani-suit": "pakistani-suits",
         "coords": "co-ord-sets",

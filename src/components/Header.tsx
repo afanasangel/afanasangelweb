@@ -19,8 +19,8 @@ export default function Header() {
     { id: "1", title: "Budget Friendly Abaya", handle: "budget-friendly-abaya" },
     { id: "2", title: "Abaya", handle: "abaya" },
     { id: "3", title: "Premium Abaya", handle: "premium-abaya" },
-    { id: "4", title: "Pakistani Suit", handle: "pakistani-suit" },
-    { id: "5", title: "Premium Pakistani Suits", handle: "premium-pakistani-suit" },
+    { id: "4", title: "Pakistani Suits", handle: "pakistani-suits" },
+    { id: "5", title: "Premium Pakistani Suits", handle: "premium-pakistani-suits" },
     { id: "6", title: "Bridal Collections", handle: "bridal-collections" },
   ]);
 

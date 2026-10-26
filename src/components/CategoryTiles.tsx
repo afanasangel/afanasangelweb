@@ -91,7 +91,7 @@ export default function CategoryTiles() {
 
         {/* 4. Premium Pakistani Suits */}
         <Link
-          href="/shop?collection=premium-pakistani-suit"
+          href="/shop?collection=premium-pakistani-suits"
           className="group relative overflow-hidden flex flex-col w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[9/16] lg:h-[540px] rounded-xs"
         >
           <Image

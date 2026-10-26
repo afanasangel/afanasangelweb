@@ -69,8 +69,8 @@ export default function Footer() {
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=budget-friendly-abaya">Budget Friendly Abaya</Link>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=abaya">Abaya</Link>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=premium-abaya">Premium Abaya</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=pakistani-suit">Pakistani Suit</Link>
-            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=premium-pakistani-suit">Premium Pakistani Suits</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=pakistani-suits">Pakistani Suits</Link>
+            <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=premium-pakistani-suits">Premium Pakistani Suits</Link>
             <Link className="font-body-sm text-gray-500 hover:text-black transition-colors" href="/shop?collection=bridal-collections">Bridal Collections</Link>
           </div>
 

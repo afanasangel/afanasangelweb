@@ -75,8 +75,8 @@ export default async function ShopPage({
       : [
           { label: "Premium Abaya", href: "/shop?collection=premium-abaya", active: currentCollection === "premium-abaya" },
           { label: "Abaya", href: "/shop?collection=abaya", active: currentCollection === "abaya" },
-          { label: "Pakistani Suit", href: "/shop?collection=pakistani-suit", active: currentCollection === "pakistani-suit" },
-          { label: "Premium Pakistani Suits", href: "/shop?collection=premium-pakistani-suit", active: currentCollection === "premium-pakistani-suit" },
+          { label: "Pakistani Suits", href: "/shop?collection=pakistani-suits", active: currentCollection === "pakistani-suits" },
+          { label: "Premium Pakistani Suits", href: "/shop?collection=premium-pakistani-suits", active: currentCollection === "premium-pakistani-suits" },
           { label: "Co-ords Sets", href: "/shop?collection=coords", active: currentCollection === "coords" },
         ]),
   ];
