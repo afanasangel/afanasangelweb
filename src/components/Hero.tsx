@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const slides = [
@@ -34,7 +33,10 @@ const slides = [
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 5000);
@@ -43,43 +45,33 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-screen min-h-[700px] flex items-end justify-start overflow-hidden bg-black">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-          }`}
-        >
-          {/* Mobile responsive image (served under 768px screen width for instant LCP) */}
-          <div className="block md:hidden absolute inset-0">
-            <Image
-              className="w-full h-full object-cover object-center"
-              alt={slide.title}
-              src={slide.mobileImage}
-              fill
-              priority={index === 0}
-              fetchPriority={index === 0 ? "high" : "auto"}
-              quality={ index === 0 ? 80 : 75 }
-              sizes="(max-width: 768px) 100vw, 1px"
-            />
-          </div>
+      {slides.map((slide, index) => {
+        // Render slide 0 immediately for instant SSR paint. Only mount background slides once client hydrates.
+        if (index > 0 && !mounted) return null;
 
-          {/* Desktop high-resolution image */}
-          <div className="hidden md:block absolute inset-0">
-            <Image
-              className="w-full h-full object-cover object-center"
-              alt={slide.title}
-              src={slide.image}
-              fill
-              priority={index === 0}
-              fetchPriority={index === 0 ? "high" : "auto"}
-              quality={80}
-              sizes="100vw"
-            />
+        return (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
+          >
+            {/* Single responsive image element: eliminates dual-image download on mobile & desktop */}
+            <picture className="absolute inset-0 w-full h-full">
+              <source media="(max-width: 767px)" srcSet={slide.mobileImage} />
+              <img
+                src={slide.image}
+                alt={slide.title}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding={index === 0 ? "sync" : "async"}
+                className="w-full h-full object-cover object-center"
+              />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
-        </div>
-      ))}
+        );
+      })}
       
       <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 md:px-12 pb-16 flex flex-col items-start text-left">
         <p className="font-label-caps-sm text-xs md:text-sm uppercase text-white tracking-[0.25em] mb-2 drop-shadow-md">

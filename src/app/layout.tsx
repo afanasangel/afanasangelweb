@@ -138,6 +138,21 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        {/* Preload exact responsive LCP image before any JS executes */}
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-bridal-mobile.webp"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-bridal-v2.jpg"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
       </head>
       <body suppressHydrationWarning className="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased">
         <CartProvider>
